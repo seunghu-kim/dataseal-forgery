@@ -1,68 +1,87 @@
-# Prerequisites
-*.d
+# Whitelist policy: ignore everything at the root, then re-include implementation only.
+/*
+!/.gitignore
+!/LICENSE
+!/CMakeLists.txt
+!/cmake/
+!/include/
+!/src/
+!/tests/
+!/configs/
+!/scripts/
+!/experiments/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Never track notes or reports, even inside whitelisted dirs.
+*.md
+*.pdf
+**/docs/
+**/reports/
+**/results/
+**/logs/
 
-# Precompiled Headers
-*.gch
-*.pch
+# Exception: the collaborator-facing top-level README is tracked.
+!/README.md
 
-# Linker files
-*.ilk
+# Keys, serialized ciphertexts, raw outputs
+*.key
+*.bin
+*.ser
+*.ctxt
+*.jsonl
+*.csv
 
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Build directories
+# Build outputs
 build/
-Build/
 build-*/
-
-# CMake generated files
+Build/
+out/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
+CTestTestfile.cmake
 Makefile
 install_manifest.txt
 compile_commands.json
-
-# Temporary files
-*.tmp
-*.log
-*.bak
-*.swp
-
-# vcpkg
-vcpkg_installed/
-
-# debug information files
-*.dwo
-
-# test output & cache
 Testing/
+_deps/
+third_party/
+external/
+vcpkg_installed/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.d
+*.gch
+*.pch
+*.dwo
+*.pdb
+
+# Compiled Go command binaries (produced by `go build`/`go run` in the module
+# dir); the sources live under experiments/lattigo/cmd/*.
+/experiments/lattigo/attackeval
+/experiments/lattigo/bench
+/experiments/lattigo/finalbench
+/experiments/lattigo/finaleval
+/experiments/lattigo/parammanifest
+/experiments/lattigo/planreport
+
+# Editors / OS / Python
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.tmp
+*.bak
+*.log
 .cache/
+__pycache__/
+*.pyc
+.venv/
