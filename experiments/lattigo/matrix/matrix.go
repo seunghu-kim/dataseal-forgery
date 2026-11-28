@@ -1,8 +1,8 @@
+// Package matrix implements dense row-major matrices over F_p.
 package matrix
 
 import "dsfgo/field"
 
-// Mat is a dense row-major matrix over F_p, matching src/matrix.cpp.
 type Mat struct {
 	rows, cols int
 	a          []uint64
@@ -31,7 +31,7 @@ func FromInts(f field.Field, rows [][]int64) Mat {
 func (m Mat) Rows() int { return m.rows }
 func (m Mat) Cols() int { return m.cols }
 
-func (m Mat) At(i, j int) uint64  { return m.a[i*m.cols+j] }
+func (m Mat) At(i, j int) uint64      { return m.a[i*m.cols+j] }
 func (m *Mat) Set(i, j int, v uint64) { m.a[i*m.cols+j] = v }
 
 func (m Mat) Row(i int) []uint64 {

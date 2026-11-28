@@ -1,5 +1,6 @@
-// Package sketch ports the private-sketch linear repair and its approved
-// program chain from src/sketch.cpp and src/sketch_program.cpp.
+// Package sketch implements the modified scheme (private checksums). The client
+// keeps r secret vectors as the rows of K, so the checksum W = A^T K is stored
+// as K A and the check (Y')^T K = T_f is evaluated as K Y' = T_f.
 package sketch
 
 import (
@@ -11,8 +12,7 @@ import (
 	"dsfgo/matrix"
 )
 
-// RowsFor returns the smallest r with q_auth * p^-r <= 2^-lambda, using exact
-// integer comparison (matches sketch_rows_for).
+// RowsFor returns the smallest r with q_auth * p^-r <= 2^-lambda (exact integer comparison).
 func RowsFor(p uint64, lambda uint, qAuth uint64) int {
 	target := new(big.Int).Lsh(new(big.Int).SetUint64(qAuth), lambda)
 	acc := big.NewInt(1)
@@ -53,18 +53,16 @@ func RandomMat(f field.Field, rows, cols int) matrix.Mat {
 
 type Registration struct {
 	Rows, Cols int
-	W          matrix.Mat // K * A_tau
+	W          matrix.Mat // checksum K A
 }
 
-// Client holds the private sketch key K and registered sketches; never sent to
-// the server.
+// Client holds the secret K and the input checksums; neither is sent to the server.
 type Client struct {
-	K    matrix.Mat // r x n
+	K    matrix.Mat // r x n, one secret vector per row
 	Regs map[string]Registration
 }
 
-// Server holds only the registered input matrices (data), as plaintext here;
-// the HE layer (G2) encrypts them.
+// Server holds only the registered inputs (plaintext here; the HE layer encrypts them).
 type Server struct {
 	Inputs map[string]matrix.Mat
 }
@@ -85,8 +83,6 @@ func Register(f field.Field, cs *Client, sv *Server, label string, a matrix.Mat)
 	cs.Regs[label] = Registration{a.Rows(), a.Cols(), matrix.Mul(f, cs.K, a)}
 	sv.Inputs[label] = a
 }
-
-// --- Program chain ---
 
 type StepKind int
 
@@ -132,7 +128,8 @@ func (p Program) EvalPlain(f field.Field, inputs map[string]matrix.Mat) matrix.M
 
 func Eval(f field.Field, sv Server, p Program) matrix.Mat { return p.EvalPlain(f, sv.Inputs) }
 
-// Prepare computes the expected sketch T_P over the approved public operands.
+// Prepare computes the expected value T_f from the registered checksums and the
+// public operands.
 func Prepare(f field.Field, cs Client, p Program) matrix.Mat {
 	p.valid()
 	reg, ok := cs.Regs[p[0].Label]
@@ -159,7 +156,7 @@ func Prepare(f field.Field, cs Client, p Program) matrix.Mat {
 	return acc
 }
 
-// Verify is the verified-decryption check K Y' == T_P.
+// Verify checks K Y' = T_f on the decrypted output Y'.
 func Verify(f field.Field, cs Client, expected, y matrix.Mat) bool {
 	if y.Rows() != cs.K.Cols() || y.Cols() != expected.Cols() {
 		return false

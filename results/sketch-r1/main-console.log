@@ -1,0 +1,11 @@
+﻿05:59:46 main-private_sketch_r1-controlled-n8 exit=1 validator=expected_reject_sketch_assumptions_only wall=17.5s
+06:00:06 main-dataseal_original-controlled-n8 exit=0 validator=pass wall=17.6s
+06:00:43 main-private_sketch_r1-controlled-n16 exit=1 validator=expected_reject_sketch_assumptions_only wall=35.4s
+06:01:20 main-dataseal_original-controlled-n16 exit=0 validator=pass wall=35.1s
+06:02:33 main-private_sketch_r1-controlled-n32 exit=1 validator=expected_reject_sketch_assumptions_only wall=70.5s
+06:03:46 main-dataseal_original-controlled-n32 exit=0 validator=pass wall=70.8s
+06:06:10 main-private_sketch_r1-controlled-n64 exit=1 validator=expected_reject_sketch_assumptions_only wall=142.1s
+06:08:34 main-dataseal_original-controlled-n64 exit=0 validator=pass wall=142.1s
+06:13:43 main-private_sketch_r1-controlled-n128 exit=1 validator=expected_reject_sketch_assumptions_only wall=305.7s
+06:18:51 main-dataseal_original-controlled-n128 exit=0 validator=pass wall=305.9s
+MAIN COMPLETE

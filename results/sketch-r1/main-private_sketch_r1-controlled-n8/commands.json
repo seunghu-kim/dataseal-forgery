@@ -1,0 +1,33 @@
+{
+ "collector_argv": [
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-sketch-r1-20261114T055536Z\\faireval.exe",
+  "--repo",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery",
+  "--out",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-sketch-r1-20261114T055536Z\\main-private_sketch_r1-controlled-n8",
+  "--metadata",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-sketch-r1-20261114T055536Z\\main-private_sketch_r1-controlled-n8-environment.json",
+  "--run-id",
+  "B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n8",
+  "--modfile",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod",
+  "--workload",
+  "matmul",
+  "--sizes",
+  "8",
+  "--methods",
+  "private_sketch",
+  "--packings",
+  "controlled",
+  "--trials",
+  "20",
+  "--warmups",
+  "1",
+  "--seed",
+  "1",
+  "--stop-on-error",
+  "--sketch-rows",
+  "1"
+ ],
+ "operator_command": "GOMAXPROCS=1 C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-sketch-r1-20261114T055536Z\\faireval.exe '--repo' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery' '--out' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-sketch-r1-20261114T055536Z\\main-private_sketch_r1-controlled-n8' '--metadata' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-sketch-r1-20261114T055536Z\\main-private_sketch_r1-controlled-n8-environment.json' '--run-id' 'B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n8' '--modfile' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod' '--workload' 'matmul' '--sizes' '8' '--methods' 'private_sketch' '--packings' 'controlled' '--trials' '20' '--warmups' '1' '--seed' '1' '--stop-on-error' '--sketch-rows' '1'"
+}

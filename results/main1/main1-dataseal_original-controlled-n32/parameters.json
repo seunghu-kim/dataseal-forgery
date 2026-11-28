@@ -1,0 +1,53 @@
+{
+ "assumptions": [
+  "no verification oracle: the server never observes accept/reject outcomes"
+ ],
+ "boundary_version": "B-fair-v3",
+ "methods": {
+  "dataseal_original": {
+   "authentication": "DataSeal checksum rows; fixed key fixture K=rnd(seed 3), alpha=7",
+   "encryption": "public-key (bfvpack.KeyGen GenKeyPair)",
+   "evaluation_keys": "rotation keys only (no relinearisation, no row swap)",
+   "forgery_bound": "no bound claimed (attack target in Experiment A)",
+   "packing": "controlled: stride n+2 (tiled: 66); native: stride n (DataSeal n+2; tiled 64/66); n=128 tiled T=64 (cmd/finaleval rule)",
+   "parameter_profile": "PN14QP438",
+   "program_sharing": "per_row_block (B-2 PrepareTiledMatmul structure)"
+  }
+ },
+ "profiles": [
+  {
+   "N": 16384,
+   "P": [
+    36028797020209153,
+    36028797017456641
+   ],
+   "Q": [
+    72057594038321153,
+    36028797019389953,
+    36028797019488257,
+    18014398508400641,
+    18014398510661633,
+    18014398508138497
+   ],
+   "T": 65537,
+   "he_security": {
+    "basis": [
+     "Lattigo preset: bfv.DefaultParams (incl. PN14QP438) documented as 'ensuring 128 bit security in the classic setting' (lattigo v2.2.1-0.20210923173451 bfv/params.go:92-93)",
+     "HomomorphicEncryption.org security standard (Albrecht et al., 2018), classical 128-bit table: N=2^14 allows log2(QP) \u003c= 438 for a uniform ternary secret with sigma ~ 3.2; PN14QP438 has logQP = 438 (at the bound, includes the key-switching modulus P)",
+     "secret distribution: rlwe GenSecretKey = ternary with P(0)=P(+1)=P(-1)=1/3 (rlwe/keygen.go:61-62, ring/ring_sampler_ternary.go:20-23); error sigma = 3.2 (rlwe/params.go:27)",
+     "the plaintext modulus t does not enter the RLWE hardness estimate, so the PN14QP438-T54 profile (only T changed) keeps the same basis"
+    ],
+    "estimator": "lattice-estimator not run (not available offline in this environment); the claim rests on the standard table and the Lattigo preset documentation",
+    "target": "128-bit classical",
+    "verified_bits": "not_measured"
+   },
+   "logQ": 328,
+   "logQP": 438,
+   "name": "PN14QP438",
+   "public_plaintext_mul_encoding": "lattigo bfv Encoder.EncodeUintMul (EncodeUintRingT -\u003e RingTToMul)",
+   "sigma": 3.2,
+   "t_below_every_QP_prime": true
+  }
+ ],
+ "sketch_rows": 10
+}

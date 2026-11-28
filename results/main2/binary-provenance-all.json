@@ -1,0 +1,8 @@
+﻿{
+    "binary":  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main1-20261113T080848Z\\faireval.exe",
+    "binary_sha256":  "101e765c390cb8e59627eba54f7984c59e30d4ddbc5498c212a71470f2ac61b9",
+    "build_commit":  "1c1e4df705367545b2a6a57e8075cf49e81ace5b",
+    "repository_head_at_run":  "6da38db9b18ecc0742c03d08e67db6006d15caa0",
+    "source_drift_since_build":  "experiments/lattigo/cmd/faireval/main.go           |  63 ++-\r\n experiments/lattigo/cmd/faireval/record.go         |   2 +\r\n experiments/lattigo/cmd/faireval/workloads.go      | 595 +++++++++++++++++++++\r\n experiments/lattigo/cmd/faireval/workloads_test.go |  91 ++++\r\n experiments/lattigo/veritas/fair_element.go        | 165 ++++++\r\n experiments/lattigo/veritas/fair_element_test.go   | 135 +++++\r\n 6 files changed, 1045 insertions(+), 6 deletions(-)",
+    "note":  "Measured code = the preserved binary (run.json build_info vcs.revision). run.json source_sha256 reflects the working tree at run time and may be newer than the binary."
+}

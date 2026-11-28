@@ -23,8 +23,7 @@ func randMat(f field.Field, r, c int, seed uint64) matrix.Mat {
 	return m
 }
 
-// Tiled matmul must agree with plaintext F_p matmul across sizes that force
-// multi-ciphertext tiling, including non-multiple-of-tile and rectangular cases.
+// Tiled matmul agrees with plaintext matmul, including non-multiple and rectangular sizes.
 func TestTiledMatmulCorrect(t *testing.T) {
 	ctx := NewContext()
 	f := ctx.Field()
@@ -41,8 +40,9 @@ func TestTiledMatmulCorrect(t *testing.T) {
 		want := matrix.Mul(f, a, b)
 		rots := TiledMatmulRotations(tc.d, tc.ell, tc.tile)
 		k := ctx.KeyGen(Capability{Rotations: rots})
-		ea := k.EncryptTiled(a, tc.tile)
-		ec := k.PublicRightMatmulTiled(ea, b, tc.ell)
+		l := NewTiledLayout(tc.n, tc.d, tc.n, tc.tile, tc.tile, false)
+		prep := ctx.PrepareTiledMatmul(l, b, tc.ell)
+		ec := k.ServerTiledMatmul(k.EncryptTiledLayout(a, l), prep)
 		got := k.DecryptTiled(ec)
 		if !got.Equal(want) {
 			t.Fatalf("tiled matmul mismatch for %+v", tc)
@@ -50,9 +50,7 @@ func TestTiledMatmulCorrect(t *testing.T) {
 	}
 }
 
-// A 128x128 bfv_only product also fits a single PN15 ciphertext (dim 128 ==
-// RowSlots). This validates the single-ciphertext alternative recorded in the
-// feasibility doc, exercising a rotation layout that fills the whole half.
+// A 128x128 product also fits one PN15 ciphertext; the layout fills the whole half.
 func TestSingleCtPN15_128(t *testing.T) {
 	if testing.Short() {
 		t.Skip("PN15 128x128 is slow")

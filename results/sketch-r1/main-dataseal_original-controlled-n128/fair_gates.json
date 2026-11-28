@@ -1,0 +1,88 @@
+{
+ "boundary_version": "B-fair-v3",
+ "failed": 0,
+ "finished_utc": "2026-11-14T06:18:50.8963787Z",
+ "offline_validator_ok": true,
+ "records": 11,
+ "started_utc": "2026-11-14T06:13:45.8533421Z",
+ "stopped_early": false,
+ "trials": [
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wtrue-0",
+   "is_warmup": true,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-0",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-1",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-2",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-3",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-4",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-5",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-6",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-7",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-8",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-sketch-r1-20261114T055536Z-main-dataseal_original-controlled-n128-dataseal_original-controlled-n128-wfalse-9",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  }
+ ]
+}

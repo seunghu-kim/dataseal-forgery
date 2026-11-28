@@ -1,0 +1,158 @@
+{
+ "boundary_version": "B-fair-v3",
+ "failed": 0,
+ "finished_utc": "2026-11-13T10:38:12.576829Z",
+ "offline_validator_ok": true,
+ "records": 21,
+ "started_utc": "2026-11-13T10:37:48.8210181Z",
+ "stopped_early": false,
+ "trials": [
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wtrue-0",
+   "is_warmup": true,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-0",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-1",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-2",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-3",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-4",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-5",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-6",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-7",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-8",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-9",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-10",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-11",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-12",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-13",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-14",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-15",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-16",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-17",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-18",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  },
+  {
+   "trial_id": "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse2-private_sketch-controlled-n8-reuse2-private_sketch-controlled-n8-wfalse-19",
+   "is_warmup": false,
+   "execution_status": "completed",
+   "passed": true,
+   "problems": []
+  }
+ ]
+}

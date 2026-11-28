@@ -1,9 +1,9 @@
+// Package field implements exact arithmetic in F_p (p prime, p < 2^62); the
+// experiments use p = 65537.
 package field
 
 import "math/bits"
 
-// Field is exact arithmetic modulo a prime p (p < 2^62), matching the C++
-// reference in src/field.cpp.
 type Field struct{ p uint64 }
 
 func New(p uint64) Field {
@@ -15,6 +15,7 @@ func New(p uint64) Field {
 
 func (f Field) P() uint64 { return f.p }
 
+// mulmod returns (a*b) mod m via a 128-bit product to avoid 64-bit overflow.
 func mulmod(a, b, m uint64) uint64 {
 	hi, lo := bits.Mul64(a, b)
 	_, rem := bits.Div64(hi%m, lo, m)
@@ -115,6 +116,7 @@ func (f Field) Mul(a, b uint64) uint64 { return mulmod(a, b, f.p) }
 
 func (f Field) Pow(a, e uint64) uint64 { return powmod(a, e, f.p) }
 
+// Inv returns the inverse of a by Fermat's little theorem (a^(p-2)).
 func (f Field) Inv(a uint64) uint64 {
 	if a%f.p == 0 {
 		panic("inverse of zero")

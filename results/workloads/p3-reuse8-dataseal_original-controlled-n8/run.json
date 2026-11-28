@@ -1,0 +1,298 @@
+{
+ "argv": [
+  "--repo",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery",
+  "--out",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-phase3-main-20261113T101521Z\\p3-reuse8-dataseal_original-controlled-n8",
+  "--metadata",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-phase3-main-20261113T101521Z\\p3-reuse8-dataseal_original-controlled-n8-environment.json",
+  "--run-id",
+  "B-fair-v3-phase3-main-20261113T101521Z-p3-reuse8-dataseal_original-controlled-n8",
+  "--modfile",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod",
+  "--workload",
+  "reuse",
+  "--programs",
+  "8",
+  "--sizes",
+  "8",
+  "--methods",
+  "dataseal_original",
+  "--packings",
+  "controlled",
+  "--trials",
+  "20",
+  "--warmups",
+  "1",
+  "--seed",
+  "1",
+  "--pe-t",
+  "18014398507614209",
+  "--stop-on-error"
+ ],
+ "bfv_tile_col": 64,
+ "boundary_version": "B-fair-v3",
+ "build_info": {
+  "GoVersion": "go1.27.3",
+  "Path": "dsfgo/cmd/faireval",
+  "Main": {
+   "Path": "dsfgo",
+   "Version": "(devel)"
+  },
+  "Deps": [
+   {
+    "Path": "github.com/davecgh/go-spew",
+    "Version": "v1.1.1",
+    "Sum": "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c="
+   },
+   {
+    "Path": "github.com/ldsec/lattigo/v2",
+    "Version": "v2.2.0",
+    "Replace": {
+     "Path": "github.com/ldsec/lattigo/v2",
+     "Version": "v2.2.1-0.20210923173451-d9eb44f2c43f",
+     "Sum": "h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M="
+    }
+   },
+   {
+    "Path": "github.com/pmezard/go-difflib",
+    "Version": "v1.0.0",
+    "Sum": "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM="
+   },
+   {
+    "Path": "github.com/stretchr/testify",
+    "Version": "v1.7.0",
+    "Sum": "h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY="
+   },
+   {
+    "Path": "golang.org/x/crypto",
+    "Version": "v0.0.0-20210317152858-513c2a44f670",
+    "Sum": "h1:gzMM0EjIYiRmJI3+jBdFuoynZlpxa2JQZsolKu09BXo="
+   },
+   {
+    "Path": "golang.org/x/sys",
+    "Version": "v0.0.0-20210317225723-c4fcb01b228e",
+    "Sum": "h1:XNp2Flc/1eWQGk5BLzqTAN7fQIwIbfyVTuVxXxZh73M="
+   },
+   {
+    "Path": "gopkg.in/yaml.v3",
+    "Version": "v3.0.0-20210107192922-496545a6307b",
+    "Sum": "h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo="
+   },
+   {
+    "Path": "veritas/vche",
+    "Version": "v0.0.0",
+    "Replace": {
+     "Path": "../../external/veritas",
+     "Version": "(devel)"
+    }
+   }
+  ],
+  "Settings": [
+   {
+    "Key": "-buildmode",
+    "Value": "exe"
+   },
+   {
+    "Key": "-compiler",
+    "Value": "gc"
+   },
+   {
+    "Key": "DefaultGODEBUG",
+    "Value": "containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,httpcookiemaxnum=0,httplaxcontentlength=1,httpmuxgo121=1,httpservecontentkeepheaders=1,httpservecontentmaxranges=1,multipathtcp=0,randseednop=0,rsa1024min=0,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,tracebacklabels=0,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509sslcertoverrideplatform=0,x509usepolicies=0"
+   },
+   {
+    "Key": "CGO_ENABLED",
+    "Value": "0"
+   },
+   {
+    "Key": "GOARCH",
+    "Value": "amd64"
+   },
+   {
+    "Key": "GOOS",
+    "Value": "windows"
+   },
+   {
+    "Key": "GOAMD64",
+    "Value": "v1"
+   },
+   {
+    "Key": "vcs",
+    "Value": "git"
+   },
+   {
+    "Key": "vcs.revision",
+    "Value": "6da38db9b18ecc0742c03d08e67db6006d15caa0"
+   },
+   {
+    "Key": "vcs.time",
+    "Value": "2026-11-13T10:14:00Z"
+   },
+   {
+    "Key": "vcs.modified",
+    "Value": "false"
+   }
+  ]
+ },
+ "cells": [
+  [
+   "dataseal_original",
+   "controlled"
+  ]
+ ],
+ "clock": {
+  "conversion": "integer quotient/remainder of raw ticks",
+  "frequency_hz": 10000000,
+  "source": "Windows QueryPerformanceCounter"
+ },
+ "external_veritas": {
+  "clean": true,
+  "head": "6e58ab505f81c03c1b71ffaf0dc29205293ba15a",
+  "status_porcelain": ""
+ },
+ "go_environment": {
+  "GODEBUG": "unset",
+  "GOFLAGS": "-mod=readonly",
+  "GOGC": "unset",
+  "GOMAXPROCS": "1",
+  "GOMEMLIMIT": "unset"
+ },
+ "methods": [
+  "dataseal_original"
+ ],
+ "note": "GOMAXPROCS fixed to 1 by the run script and enforced at start; sequential; fixed input repetitions, not independent inputs",
+ "order": "warmups first, then main; within each: sizes -\u003e methods -\u003e packings -\u003e trials (cmd/finaleval order)",
+ "packings": [
+  "controlled"
+ ],
+ "pe_block": 64,
+ "pe_t": 18014398507614209,
+ "pilot_memstats": false,
+ "programs": 8,
+ "rep_block": 8,
+ "rep_lambda": 64,
+ "repository_head": "6da38db9b18ecc0742c03d08e67db6006d15caa0",
+ "repository_status_porcelain": "",
+ "runtime_gomaxprocs": 1,
+ "runtime_numcpu": 12,
+ "runtime_version": "go1.27.3",
+ "seed": 1,
+ "sizes": [
+  8
+ ],
+ "source_sha256": {
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/experiments/lattigo/go.mod": "4ed2bf2c49fb1ad0d6c3c2d625b894a3dfde92185dfb0a9baf9545c542c1a1b3",
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/experiments/lattigo/go.sum": "ce78891583f733eca456d0b3faa8ad168a2de1867a141a20a810bd3c5b1f2d11",
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/external/veritas/go.mod": "265a2181e839ad657b3021dd3e81fc2851658226cee1c7ae929a31fe9b6ee3a7",
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/results/A/A1-reproduction-20261111-001417/reproduction.mod": "33acafa55e59a04000423bcee9801586d1264d63289ccb28565c07c474f839b0",
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/results/A/A1-reproduction-20261111-001417/reproduction.sum": "db9e5085c87b931b0cebedda42ea570f3113d0c5d8ac28508d9196c56fce9e9b",
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/results/measurement-infrastructure/20261111-004720/offline.exe": "7f6d3f415938b475a98841fa27abea44a69f5e31286cf310c1775196cc65c3e9",
+  "C:/Users/user/Desktop/DataSeal/dataseal-forgery/results/measurement-infrastructure/20261111-004720/schema.json": "b7daa3e88eb1694bd95df44df716449f2232ab16db1c12bbf3ae5becb33ae705",
+  "executable:C:/Users/user/Desktop/DataSeal/dataseal-forgery/results/B-fair-v3-phase3-main-20261113T101521Z/faireval.exe": "d2f3ece9063df32f0576f86df741c5a5afb4ae91065acae3ce490107f80eec67",
+  "experiments/lattigo/bfvpack/bfvpack.go": "8773bc6eb583dc14e67f2bbec828a562dd00b84fcd4dac8a6b59a56e2c099c6f",
+  "experiments/lattigo/bfvpack/bfvpack_test.go": "5986e31b20a03ecec03191f549b2bcc09be1ceaf0c3a1d2c563eb1ba08d2f165",
+  "experiments/lattigo/bfvpack/counts_test.go": "8ebf9a60fcbf8540543c9dee4c4a74bf1060c863525b2cab5e9232f6721882d7",
+  "experiments/lattigo/bfvpack/meter.go": "1ea1d972d244f59a1154c9d1c3589d9a21f8c88a87de5cbafa87e5439587c1b6",
+  "experiments/lattigo/bfvpack/meter_test.go": "b9bc2be79b473bfdb2625153e024de349520de3c5ad88b7832d3a7f0305b82bd",
+  "experiments/lattigo/bfvpack/params_test.go": "26f98b732ba6fb02dd13629dc4c092f88dfefd0fdd05d395c0326a87ec8c8024",
+  "experiments/lattigo/bfvpack/plan.go": "9ed5b8bbd14190ed61d477e764ff2a21d72ac8bbb398dc9eb6510c1312a74ab5",
+  "experiments/lattigo/bfvpack/plan_test.go": "c2100922b0079e8b4ccfb2caed7b13122368e42223c03a159f182194665775f2",
+  "experiments/lattigo/bfvpack/prepared_tiled_test.go": "ed526e93cf1acaed90ea6125708108e9dc930586eddaafeac64f3b570372d6f5",
+  "experiments/lattigo/bfvpack/provenance.go": "18340cfe8fd70155a12549dd9594174cf1a845e2479cb5fc07a69209f5711715",
+  "experiments/lattigo/bfvpack/tiled.go": "23c5c6d953b00bdc57eb72454332d1ebb49248ce667fb22ead5f4581831db6d7",
+  "experiments/lattigo/bfvpack/tiled_capacity_test.go": "67a3b1401ce648996af89fdcd33970a216aea9f5fc0e1b866af264c7bb0fb9d6",
+  "experiments/lattigo/bfvpack/tiled_test.go": "936500f2c04176ffd2ca28b0d6235bd0ffb6ed805463c346499d4bc549223f22",
+  "experiments/lattigo/cmd/faireval/clock_other.go": "9a84c082be06afd1effbb1c8683c97a6d741274b6358b06dadef9ef196afafa0",
+  "experiments/lattigo/cmd/faireval/clock_windows.go": "e9ff3c91d89bbed948a6a1f37d334a126aebb1743b3d395b52b7ce014aa7c6c1",
+  "experiments/lattigo/cmd/faireval/faireval_test.go": "16d111a0fb9365f9672df5472675d717ae406cc511102c5b12b8e8418667a442",
+  "experiments/lattigo/cmd/faireval/main.go": "813075eef3eaeaab83efff8dea87a5d38246c6d005a65a2bb1f892ee3ef4ad4b",
+  "experiments/lattigo/cmd/faireval/pipelines.go": "b2f6d48ef56bfcfb19fd73a9fc7f72fb462055e5ad37b539c43c6195f2af9984",
+  "experiments/lattigo/cmd/faireval/record.go": "5282941e99b4a39dba07a2c11e5de4f9b39b5dbda65d2486833b1d83a07b585a",
+  "experiments/lattigo/cmd/faireval/timer.go": "52141e2141202b5984f07f837d333feb5deb7da4f97f5d82b85c73ba418262ec",
+  "experiments/lattigo/cmd/faireval/workloads.go": "acd61e1632fa6ea760ef369fa134c762ba4b579894d1e5294ab1f65cd19c8bcb",
+  "experiments/lattigo/cmd/faireval/workloads_test.go": "e0aefd08c86d8a68a7da86478049d6e5f8263d7c03948b82984d7f0399131176",
+  "experiments/lattigo/dataseal/dataseal.go": "a46db777cd33abd44a758564cad04fee1df8b48019d06621f8f7d37674473f8f",
+  "experiments/lattigo/dataseal/dataseal_test.go": "6a445d2e0e02ab1445a8132dd35f7bc6678d7d106bcc52adce9bba59f583e769",
+  "experiments/lattigo/field/field.go": "62afd4ee0242cca8ba20f933ffc831dab0c21149fe02ed74e8a8566335424c66",
+  "experiments/lattigo/matrix/matrix.go": "d2bd0a23e9c7afd643529ad64373e2d5a261390d7dc6b39b6647b6fbb41cca79",
+  "experiments/lattigo/sketch/sketch.go": "efa1ad64de58f0d5ea0b3f7d5c0f2353fe5359dfa198ee6ccf47bf3a4013f7ff",
+  "experiments/lattigo/sketch/sketch_test.go": "5d41e7e273265261013d75524a004d30ec6abbcd67c415fde288f23c9430059f",
+  "experiments/lattigo/veritas/element_phases.go": "12279297b0a47ff247a0e2bea2789ef49a44934b4f71c1d1780740a3d9522794",
+  "experiments/lattigo/veritas/fair.go": "1ff771faf64c632a23898344a8050da036fa27aff15c3456b62fdc08513c930e",
+  "experiments/lattigo/veritas/fair_element.go": "db16fc30192ff328e720242fde3c958a42e1767c907e2cb44fd74f6e16c761c5",
+  "experiments/lattigo/veritas/fair_element_test.go": "c1087fc3e221ff79b7c0d7453f40adfc3aa9ced52e742cf9e140dcb6ebeaa014",
+  "experiments/lattigo/veritas/fair_test.go": "27e03c880b775ac20a346f874c2d22bc3f36785ec367aa21d9ff280090e13943",
+  "experiments/lattigo/veritas/matmul.go": "1dbc707dd743adbe6acc62ac5a3ac22e622f222389337d358f94d1b7fa6f2a30",
+  "experiments/lattigo/veritas/matmul_test.go": "282bb23ec07ff734fb94f75d9cb13599598d5515e2dc30ecc5cea5f51a0cf9eb",
+  "experiments/lattigo/veritas/pe.go": "d1744ee10de1c6b9fdb5c093e037f749acac353c969f82795d61e8b4e5f1eea4",
+  "experiments/lattigo/veritas/rep.go": "359a959c11efc877fc5a25db5180e9145dea6ead9b4a0bbfd40a014e6e4904bf",
+  "experiments/lattigo/veritas/veritas_test.go": "cbb7af25a3bf2e7d6ff641b4323316598d8652c0c0f1ccb3380f025dc427ca84",
+  "external/veritas/vche/bfv_benchmark_test.go": "9aff23331e9578ee1a9612653e30084235f3519423922d5973ea22b432cf7e04",
+  "external/veritas/vche/bivariate_poly.go": "5f310a7ee977ab2836054cd0f00dcbf1b02f4d73b942cd0439fb3e0ac5edf5b9",
+  "external/veritas/vche/encoder.go": "fa69d7b058e0c411e26fecb0f812721ff9e3464e88b8afb4991dc3ec9be1566e",
+  "external/veritas/vche/evaluator.go": "1c45de74d5d17b9efb878aa4cb1638bc4c26ec68cc92150b86beca0f4ebd84a9",
+  "external/veritas/vche/evaluator_plaintext.go": "69d3a50b57c659555d120bf91ccc359166f7492be0107ca6bf68c5f7d4121298",
+  "external/veritas/vche/evaluator_plaintext_CFPRF.go": "15a5ebfb58a20372a71f215bab24d576122eb6f7b47221fae17bc450f421720c",
+  "external/veritas/vche/generic_decryptor.go": "8018440f491b796fc8cf485f8a7093b2d681b470182ea6e95b4f834284e20a5e",
+  "external/veritas/vche/generic_encoder.go": "39a0a4238e4c3b99e02e8c7bd3ca2b04bf5bcbdcea923b2abbbc0fcd0b40a19b",
+  "external/veritas/vche/generic_encryptor.go": "9c5ca75a7beda7642c736b616d46a039430b7c20193e22d2c86e3e4d7b8a2fa2",
+  "external/veritas/vche/generic_evaluator.go": "df31221fa17e80b27ce6c54f86f4649abfa43a4213c6fecc6990e52784db2d68",
+  "external/veritas/vche/generic_evaluator_plaintext.go": "65d7b6529f8ce0c396ffe8ec133ce61cd56a6ca56d2068a8ec9003d60a13191a",
+  "external/veritas/vche/generic_evaluator_plaintext_CFPRF.go": "446846fc5a49338440deb5561324c5fcd7c8b05cfc039ef94d7364db1c496a56",
+  "external/veritas/vche/params.go": "4e1ab2a4e4a3877581a9541b37a9f165bdbc2eeb600066400f6a840cd3c96a2c",
+  "external/veritas/vche/prf.go": "484ab803e4f2ff8877d5b99cd9616682287ee2c15b75b40b286d7c6643528efb",
+  "external/veritas/vche/prf_test.go": "2d5ace113fa0ca3bff460dc4a22ada615232e599b493e76eb390bae66e990251",
+  "external/veritas/vche/test_utils.go": "f249dc1a19ab95af2f7f113d5179b4739fb7ed2d6545accdddef8bf8ce879f42",
+  "external/veritas/vche_1/ciphertext.go": "5c2df1ba80b22193ac8bf4cbb65e1c4d5435bf1c6575feb4295f4212a3f491a2",
+  "external/veritas/vche_1/decryptor.go": "eafe566958fffb9cac363914834ee25869cd1c6953f6fd3ed2d55c363ddce231",
+  "external/veritas/vche_1/encoder.go": "16cb0cb5e410f996bb83a251bcbf50dbf25e92633c22fb0aa0db808bc573cee7",
+  "external/veritas/vche_1/encryptor.go": "ae26bea517e9d16ab0a4c5258f8207f48c9ea45b9c04c11f2d1e0d96d2fe89de",
+  "external/veritas/vche_1/evaluator.go": "ef13995a4aac24bdc82d9e8a9b839ee2729817e1b91a15a7329fa8d8f129bda8",
+  "external/veritas/vche_1/evaluator_plaintext.go": "c4bb5794323f3431c2add1b38708a39db9b704d7498728ec320eca6029ff6c14",
+  "external/veritas/vche_1/evaluator_plaintext_CFPRF.go": "b283de93e999639d4f2b4f12c2cd89cd70d71c6f61a1733e2660797e73ba31b4",
+  "external/veritas/vche_1/generic_decryptor.go": "823f7b32376bd32cd87dde6cec3e233fa2d4e1e2bd59cabd29dd43a2727f4cae",
+  "external/veritas/vche_1/generic_encoder.go": "9a761d56cf09cdddc548a5e08df70b7a8e7f460e238ca9428e0da3138f0719ba",
+  "external/veritas/vche_1/generic_encryptor.go": "1a8c1ef595d6bbc886414d7785053a49b0b88fcdfdb6a57a947d5c2f9f199e10",
+  "external/veritas/vche_1/generic_evaluator.go": "d4b9fc7d16019359f1959f68ad0eb87f4fb5580eea93a63c471442c53f86235b",
+  "external/veritas/vche_1/generic_evaluator_plaintext.go": "add0a3c14fa547fb076cf574402afb42b436721d754b4aaf17ecd835820060e0",
+  "external/veritas/vche_1/generic_evaluator_plaintext_CFPRF.go": "9e3a512eec4dcd006fa1c33be8202cd26ec6de92284ac661051e4bb582ae3bac",
+  "external/veritas/vche_1/keygen.go": "c5592037c34052a275def2bffc67453af527d384d13d663a3b84fe59fba2f424",
+  "external/veritas/vche_1/keys.go": "875b82fa958f5a7e8f007cc6494f642d9ea9bc63280ad9d9894fe1e9a6d6df5b",
+  "external/veritas/vche_1/params.go": "f9f0a0543e4899bdcd0fffb3d62ac5b3d68c38b905bc5becd6c702429991a077",
+  "external/veritas/vche_1/plaintext.go": "c5522b5696ba3d14b9222d870adb6e345f0634463e31957f63f33689f4c0c40b",
+  "external/veritas/vche_1/test_utils.go": "dbb4abb7250692497db6b328ae7a9b27d37dc8e8fe7941dadfb517e26248c1bc",
+  "external/veritas/vche_1/vche_1_benchmark_test.go": "447a4278e02edb77015ba36e540573bb59dee881ad47e8c1c0ae2ee179da90f9",
+  "external/veritas/vche_1/vche_1_test.go": "bef412c591cc185c8768304b11f9c75ace11df7c78c12ce68ebefe38f5dc87dc",
+  "external/veritas/vche_2/ciphertext.go": "07e8dec99273f311b3cf115d92a6de5c8f7e13d493c3b2fe540e0b5dbf49d8b6",
+  "external/veritas/vche_2/convolution_benchmark_test.go": "f6cb6573883eb3c79b6e870042d02fa10c637994b8aecc9b6ead9b4a3547d021",
+  "external/veritas/vche_2/decryptor.go": "1910b57de1d2b02252997c31e6f7c190c45de935847afdffe8215ce7862fa485",
+  "external/veritas/vche_2/encoder.go": "e7af73c44dc9b7c86ef95cba52ca7c5065327f139db64a4d498a63c2e5c1d14e",
+  "external/veritas/vche_2/encryptor.go": "c6721b81ed149de33a105275a2394d4e83e01194b0695d0e39f196897311b610",
+  "external/veritas/vche_2/evaluator.go": "eff2be55748aa3347729ae4a38e9533a3736a8d1d9ca6114461300aeb8caf5bc",
+  "external/veritas/vche_2/evaluator_plaintext.go": "d3ff99ccf564bf8572e552b4c93233bfc011284e2a6df856854333c10930f990",
+  "external/veritas/vche_2/evaluator_plaintext_CFPRF.go": "6867e9f7ef2b77c4a2b64ae6a7c43eb4899e9ec11d6303bc0088fc835c66cc8a",
+  "external/veritas/vche_2/generic_decryptor.go": "a1252edaf66582299d2da27ad5cdbf0ddd90c3f759e9a46275ee88afa2534508",
+  "external/veritas/vche_2/generic_encoder.go": "62133bb2fa8005c320e04ec393a5de71a3e94b02b6316d49a0d52151a0d503a8",
+  "external/veritas/vche_2/generic_encryptor.go": "a0114a69a2d73e6cbad399ef7a13231cb2c90b7402de39c0c2257cafa0b83cb8",
+  "external/veritas/vche_2/generic_evaluator.go": "aeba788531bc10255109fb3659ea84166d4c26607cecd0fac997ba8a8e3ef6c1",
+  "external/veritas/vche_2/generic_evaluator_plaintext.go": "6e95fd1d81272e7ef76015eb68172db7e7f9ffa886f2df9e9f35b0565ff9ccd8",
+  "external/veritas/vche_2/generic_evaluator_plaintext_CFPRF.go": "952bc927ea12b080ed5cbdd6258762eed8c35f384fbdf7e7561044a425a95661",
+  "external/veritas/vche_2/keygen.go": "89671a21e63c597a0ddd7097d540fa820c4f83bbe8cf53f5ea9bb83579408930",
+  "external/veritas/vche_2/keys.go": "474c62720ed30ff3b076f447198bd7c20cbc34b4fee2dd4b7fb1de549b8fae6b",
+  "external/veritas/vche_2/params.go": "f9d8ab8eaf05b1ed6afd111dfd495f22a2c6dfe2e29fc96cb0f4c4e53a277037",
+  "external/veritas/vche_2/plaintext.go": "a9eaadb4d6112fd7e60a863e2db40cde3b44e6f01f6d516a06d40b0e09a67ed6",
+  "external/veritas/vche_2/polynomial_protocol.go": "90b0cf92aa41bffd275c52ad8962583c14f97712fdfc6dc18dad865e04dea422",
+  "external/veritas/vche_2/polynomial_protocol_test.go": "81a020b7c68806fc0dfe24fc2e4a49d6e45449330f8b00eea876d80b29ad3fce",
+  "external/veritas/vche_2/prover_verifier.go": "319eb9b0656fc9b52e7ecd8e1f405635c6e070878ef0208fc2b73ed2c65a613f",
+  "external/veritas/vche_2/requadratization_protocol.go": "fe88ab55a64c01d30629399e5febd3e444a5bac6ecdc811c5a84c8b9f0f9729c",
+  "external/veritas/vche_2/requadratization_protocol_test.go": "44b1838a60101d22f7ac5a2d5ee7d44bf817feed90aba67df704058a0ced8b87",
+  "external/veritas/vche_2/requadratization_protocol_time.go": "111feca5a0198c11435380cc0132426bf68817324397a4a3a0c85f743eec7342",
+  "external/veritas/vche_2/test_utils.go": "2d86336cda65892ba2eef202f17845488ef2f40ecb0d280a89cfbf859c5e8694",
+  "external/veritas/vche_2/vche_2_benchmark_test.go": "d039350df108547ac7d964894a69a743c4c0e58e1bca0c714daf240be70bdfea",
+  "external/veritas/vche_2/vche_2_test.go": "08c29f4ff4d90e6bd0cab8d5f9074e59165f36a64c792eca62c312c97e6f58c5"
+ },
+ "trials": 20,
+ "warmups": 1,
+ "workload": "reuse"
+}

@@ -2,25 +2,23 @@
 /*
 !/.gitignore
 !/LICENSE
-!/CMakeLists.txt
-!/cmake/
-!/include/
-!/src/
-!/tests/
 !/configs/
 !/scripts/
 !/experiments/
+!/tools/
+!/results/
 
 # Never track notes or reports, even inside whitelisted dirs.
 *.md
 *.pdf
 **/docs/
 **/reports/
-**/results/
 **/logs/
 
 # Exception: the collaborator-facing top-level README is tracked.
 !/README.md
+!/experiments/lattigo/attackrun/README.md
+!/tools/validator/SCHEMA.md
 
 # Keys, serialized ciphertexts, raw outputs
 *.key
@@ -67,11 +65,8 @@ vcpkg_installed/
 # Compiled Go command binaries (produced by `go build`/`go run` in the module
 # dir); the sources live under experiments/lattigo/cmd/*.
 /experiments/lattigo/attackeval
-/experiments/lattigo/bench
-/experiments/lattigo/finalbench
-/experiments/lattigo/finaleval
-/experiments/lattigo/parammanifest
-/experiments/lattigo/planreport
+/experiments/lattigo/efficiencyeval
+/tools/validator/validator
 
 # Editors / OS / Python
 .DS_Store
@@ -85,3 +80,8 @@ vcpkg_installed/
 __pycache__/
 *.pyc
 .venv/
+
+# Exception: the stored runs under results/ keep their records, tables and logs.
+!/results/**/*.jsonl
+!/results/**/*.csv
+!/results/**/*.log

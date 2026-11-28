@@ -22,7 +22,7 @@ func TestFieldFixtures(t *testing.T) {
 	}
 }
 
-// Guide/C++ fixture: k=(2,3,5), a1=(1,2,0), a2=(0,1,1) -> w1=w2=8, h=(8,8,-8), k^T h=0.
+// Kernel fixture: k=(2,3,5), a1=(1,2,0), a2=(0,1,1) -> w1=w2=8, h=(8,8,-8), k^T h=0.
 func TestKernelFixtureMath(t *testing.T) {
 	k := f.VecFromInts([]int64{2, 3, 5})
 	a := matrix.FromInts(f, [][]int64{{1, 0}, {2, 1}, {0, 1}})
@@ -68,7 +68,7 @@ func TestMatmulHonestAccepted(t *testing.T) {
 	if !cStar.TopRows(3).Equal(matrix.Mul(f, a, b)) {
 		t.Fatal("data rows")
 	}
-	for _, mode := range []MatmulVerifier{Original, Strengthened, Appendix} {
+	for _, mode := range []MatmulVerifier{Original, Corrected, Appendix} {
 		if !MatmulVerify(f, e.Client, cStar, mode).Accepted() {
 			t.Fatalf("mode %v rejected honest", mode)
 		}
@@ -81,7 +81,7 @@ func TestMatmulRejectsTamper(t *testing.T) {
 	e := MatmulEncode(f, a, b, MatmulKey{f.VecFromInts([]int64{2, 3, 5}), 7})
 	cStar := MatmulEval(f, e)
 	cStar.Set(0, 0, f.Add(cStar.At(0, 0), 1))
-	for _, mode := range []MatmulVerifier{Original, Strengthened, Appendix} {
+	for _, mode := range []MatmulVerifier{Original, Corrected, Appendix} {
 		if MatmulVerify(f, e.Client, cStar, mode).Accepted() {
 			t.Fatalf("mode %v accepted tamper", mode)
 		}

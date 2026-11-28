@@ -2,7 +2,7 @@
   "repository": "https://github.com/ldsec/veritas",
   "commit": "6e58ab505f81c03c1b71ffaf0dc29205293ba15a",
   "clone_path": "external/veritas (gitignored, not tracked)",
-  "language": "Go 1.15 (module), built with local Go 1.23.4",
+  "language": "Go 1.15 (module)",
   "he_library": "Lattigo BFV",
   "lattigo_pin": {
     "module": "github.com/ldsec/lattigo/v2",
@@ -17,5 +17,5 @@
     "vche_2": "PE encoding",
     "vche_2_CFPRF": "PE with PRF optimization (tests)"
   },
-  "note": "REP = replication encoding (vche_1); PE = polynomial encoding (vche_2). Optimized variants are the *_CFPRF modules. Dependencies isolated under external/; system Go and /usr/local untouched."
+  "note": "REP = replication encoding (vche_1); PE = polynomial encoding (vche_2). Optimized variants are the *_CFPRF modules."
 }

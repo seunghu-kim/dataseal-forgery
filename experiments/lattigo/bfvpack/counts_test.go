@@ -4,10 +4,8 @@ import (
 	"testing"
 )
 
-// Operation counts must be a per-single-evaluation quantity: resetting then
-// evaluating once always yields the same counts regardless of how many times
-// the benchmark repeats the timed call, and repeating without reset scales
-// linearly. This guards the F1 counter bug (aggregated counts over trials).
+// Counts are per evaluation: one evaluation after a reset gives fixed counts, and
+// repeats without reset scale linearly.
 func TestServerOpCountPerInvocation(t *testing.T) {
 	ctx := NewContext()
 	f := ctx.Field()
@@ -29,8 +27,6 @@ func TestServerOpCountPerInvocation(t *testing.T) {
 		t.Fatalf("reset-then-one-eval not stable: %+v vs %+v", one, two)
 	}
 
-	// Three repeated evaluations without reset must be exactly 3x (aggregation
-	// is linear), proving the earlier 360-vs-30 inflation was trial budget.
 	k.ResetCount()
 	for i := 0; i < 3; i++ {
 		k.ServerMatmul(ea, prep)

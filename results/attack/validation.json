@@ -1,0 +1,13 @@
+{
+  "valid": true,
+  "rows": 1912,
+  "issues": [
+    {
+      "severity": "info",
+      "row": 0,
+      "field": "partitions",
+      "message": "56 distinct run/workload/profile/boundary groups are kept separate"
+    }
+  ],
+  "separate_analysis_partitions": 56
+}

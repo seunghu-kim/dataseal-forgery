@@ -1,0 +1,31 @@
+{
+ "collector_argv": [
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main1-20261113T080848Z\\faireval.exe",
+  "--repo",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery",
+  "--out",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main2-20261113T084802Z\\main2-dataseal_strengthened-controlled-n64",
+  "--metadata",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main2-20261113T084802Z\\main2-dataseal_strengthened-controlled-n64-environment.json",
+  "--run-id",
+  "B-fair-v3-main2-20261113T084802Z-main2-dataseal_strengthened-controlled-n64",
+  "--modfile",
+  "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod",
+  "--sizes",
+  "64",
+  "--methods",
+  "dataseal_strengthened",
+  "--packings",
+  "controlled",
+  "--trials",
+  "20",
+  "--warmups",
+  "1",
+  "--seed",
+  "1",
+  "--pe-t",
+  "18014398507614209",
+  "--stop-on-error"
+ ],
+ "operator_command": "GOMAXPROCS=1 C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main1-20261113T080848Z\\faireval.exe '--repo' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery' '--out' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main2-20261113T084802Z\\main2-dataseal_strengthened-controlled-n64' '--metadata' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main2-20261113T084802Z\\main2-dataseal_strengthened-controlled-n64-environment.json' '--run-id' 'B-fair-v3-main2-20261113T084802Z-main2-dataseal_strengthened-controlled-n64' '--modfile' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod' '--sizes' '64' '--methods' 'dataseal_strengthened' '--packings' 'controlled' '--trials' '20' '--warmups' '1' '--seed' '1' '--pe-t' '18014398507614209' '--stop-on-error'"
+}

@@ -1,7 +1,5 @@
-// Package bfvpack implements row-major packed BFV matrix operations on Lattigo,
-// porting src/he_rowmajor.cpp. Public right multiplication Enc(A)->Enc(AB) uses
-// rotations and plaintext coefficient masks, with no ciphertext-ciphertext
-// product. Checksum rows are carried as ordinary rows.
+// Package bfvpack implements row-major packed BFV matrix operations on Lattigo.
+// Multiplication by a public matrix uses rotations and plaintext masks only.
 package bfvpack
 
 import (
@@ -20,12 +18,10 @@ type Context struct {
 	field   field.Field
 }
 
-// NewContext uses the VERITAS benchmark parameter set PN14QP438 (N=16384,
-// t=65537), the common BFV profile.
+// NewContext uses PN14QP438 (N=16384, t=65537), the common profile.
 func NewContext() Context { return NewContextWith(bfv.PN14QP438) }
 
-// NewContextWith builds a context for an explicit parameter literal. All pinned
-// default sets use t=65537, so F_p is identical across PN13/PN14/PN15.
+// NewContextWith takes an explicit parameter set; all pinned sets use t=65537.
 func NewContextWith(lit bfv.ParametersLiteral) Context {
 	params, err := bfv.NewParametersFromLiteral(lit)
 	if err != nil {
@@ -69,12 +65,11 @@ type Keys struct {
 	Relin bool
 	ctx   Context
 	Count *Counts
+	Meter *OperationMeter // optional operation meter; nil by default
 }
 
-// ResetCount zeroes the per-invocation operation counters.
 func (k Keys) ResetCount() { *k.Count = Counts{} }
 
-// CountSnapshot returns the current operation counters.
 func (k Keys) CountSnapshot() Counts { return *k.Count }
 
 // Capability describes which evaluation keys the server is given.
@@ -96,7 +91,6 @@ func (c Context) KeyGen(cap Capability) Keys {
 	return Keys{sk: sk, Pk: pk, eval: bfv.NewEvaluator(c.Params, ek), ek: ek, Rots: cap.Rotations, Relin: cap.Relin, ctx: c, Count: &Counts{}}
 }
 
-// Bytes returns the serialized size of a ciphertext tile.
 func (c Cipher) Bytes() int {
 	b, err := c.ct.MarshalBinary()
 	if err != nil {
@@ -105,9 +99,8 @@ func (c Cipher) Bytes() int {
 	return len(b)
 }
 
-// EvalKeyBytes returns the serialized size of the evaluation keys given to the
-// server (relinearization + rotation keys). These are function-dependent
-// server-side material, reported separately from online compute.
+// EvalKeyBytes is the serialized size of the server's evaluation keys, reported
+// separately from online compute.
 func (k Keys) EvalKeyBytes() int {
 	total := 0
 	if k.ek.Rlk != nil {
@@ -197,27 +190,22 @@ func PublicMatmulRotations(inner, outCols int) []int {
 	return out
 }
 
-// maskTerm is one pre-encoded program term: rotate the input by Delta, then
-// multiply by the public coefficient mask. Mask encoding is program-dependent
-// (public B) preparation, done once and reused, so it is excluded from
-// server-evaluation timing.
+// maskTerm is one program term: rotate by Delta, then multiply by a mask. Masks
+// are encoded once during preparation, outside server timing.
 type maskTerm struct {
 	Delta int
 	Mask  *bfv.PlaintextMul
 }
 
-// PreparedMatmul is the public, function-specific program for a public-right
-// matmul: pre-encoded masks plus the output layout. It carries no secret or
-// input-dependent state, so it can be built by the party holding public B and
-// handed to the server.
+// PreparedMatmul is the public program for multiplication by B: encoded masks and
+// the output layout, with no secret or input-dependent state.
 type PreparedMatmul struct {
 	terms     []maskTerm
 	outLayout Layout
 	rotations []int
 }
 
-// PrepareMatmul precomputes the program (masks per rotation offset) for
-// Enc(A)->Enc(A*B) with B public. This is the program_prep phase.
+// PrepareMatmul builds one mask per rotation offset (a diagonal of B).
 func (k Keys) PrepareMatmul(inLayout Layout, b matrix.Mat, outCols int) PreparedMatmul {
 	inner := inLayout.LogicalCols
 	if b.Rows() != inner {
@@ -259,12 +247,8 @@ func (k Keys) PrepareMatmul(inLayout Layout, b matrix.Mat, outCols int) Prepared
 	return p
 }
 
-// ServerMatmul evaluates a prepared program on an encrypted operand using only
-// server-visible objects: the ciphertext, the public pre-encoded masks, and the
-// declared evaluation keys. No secret key, no plaintext A. It accumulates into
-// k.Count without resetting, so it composes under tiling; callers that want a
-// per-invocation count reset k.Count once before a single untimed evaluation
-// (see ResetCount).
+// ServerMatmul evaluates a prepared program with server-visible objects only. It
+// adds to k.Count without resetting, so counts accumulate under tiling.
 func (k Keys) ServerMatmul(a Cipher, p PreparedMatmul) Cipher {
 	var acc *bfv.Ciphertext
 	for _, t := range p.terms {
@@ -288,23 +272,16 @@ func (k Keys) ServerMatmul(a Cipher, p PreparedMatmul) Cipher {
 	return Cipher{p.outLayout, acc}
 }
 
-// PublicRightMatmul computes Enc(A)->Enc(AB), B public. No ct-ct product.
-// Convenience wrapper over PrepareMatmul + ServerMatmul.
+// PublicRightMatmul is PrepareMatmul followed by ServerMatmul.
 func (k Keys) PublicRightMatmul(a Cipher, b matrix.Mat, outCols int) Cipher {
 	return k.ServerMatmul(a, k.PrepareMatmul(a.Layout, b, outCols))
 }
 
 func (k Keys) Add(a, b Cipher) Cipher {
+	k.Meter.begin("add", 0)
 	out := bfv.NewCiphertext(k.ctx.Params, 1)
 	k.eval.Add(a.ct, b.ct, out)
-	k.Count.Add++
-	return Cipher{a.Layout, out}
-}
-
-func (k Keys) AddPlain(a Cipher, c matrix.Mat) Cipher {
-	pt := bfv.NewPlaintext(k.ctx.Params)
-	k.ctx.encoder.EncodeUint(k.ctx.pack(c, a.Layout), pt)
-	out := k.eval.AddNew(a.ct, pt)
+	k.Meter.finish("add", 0)
 	k.Count.Add++
 	return Cipher{a.Layout, out}
 }
@@ -316,39 +293,47 @@ func (k Keys) Square(a Cipher) Cipher {
 	return Cipher{a.Layout, deg2}
 }
 
-func (c Context) Zeros() []uint64 { return make([]uint64, c.Slots()) }
+func (k Keys) Slots() int { return k.ctx.Slots() }
 
-func (k Keys) Slots() int    { return k.ctx.Slots() }
-func (k Keys) RowSlots() int { return k.ctx.RowSlots() }
-
-// Server-visible low-level operations used by the ciphertext-level attack
-// regression (package attacks). They take only server data and declared
-// capabilities; a missing rotation or relinearization key makes Lattigo panic,
-// which the caller classifies as UNSUPPORTED_CAPABILITY.
+// Low-level operations for package attacks. A missing key makes Lattigo panic,
+// which the caller records.
 
 func (k Keys) RotateCols(c Cipher, offset int) Cipher {
 	if offset == 0 {
 		return c
 	}
 	k.Count.Rotate++
-	return Cipher{c.Layout, k.eval.RotateColumnsNew(c.ct, offset)}
+	k.Meter.begin("rotate", offset)
+	out := k.eval.RotateColumnsNew(c.ct, offset)
+	k.Meter.finish("rotate", offset)
+	return Cipher{c.Layout, out}
 }
 
 func (k Keys) MulMask(c Cipher, mask []uint64) Cipher {
 	k.Count.MulPt++
-	return Cipher{c.Layout, k.eval.MulNew(c.ct, k.maskPt(mask))}
+	k.Meter.begin("mul_pt", 0)
+	out := k.eval.MulNew(c.ct, k.maskPt(mask))
+	k.Meter.finish("mul_pt", 0)
+	return Cipher{c.Layout, out}
 }
 
 func (k Keys) MulCipher(a, b Cipher) Cipher {
+	k.Meter.begin("mul_ct", 0)
 	deg2 := k.eval.MulNew(a.ct, b.ct)
+	k.Meter.finish("mul_ct", 0)
 	k.Count.MulCt++
+	k.Meter.begin("relin", 0)
 	k.eval.Relinearize(deg2, deg2)
+	k.Meter.finish("relin", 0)
 	return Cipher{a.Layout, deg2}
 }
 
 func (k Keys) Sub(a, b Cipher) Cipher {
 	k.Count.Add++
-	return Cipher{a.Layout, k.eval.SubNew(a.ct, b.ct)}
+	k.Meter.begin("sub", 0)
+	out := k.eval.SubNew(a.ct, b.ct)
+	k.Meter.finish("sub", 0)
+	return Cipher{a.Layout, out}
 }
 
 // WithLayout re-labels a ciphertext's logical layout without touching data.

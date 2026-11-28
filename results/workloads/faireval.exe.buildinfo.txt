@@ -1,0 +1,26 @@
+C:\Users\user\Desktop\DataSeal\dataseal-forgery\results\B-fair-v3-phase3-main-20261113T101521Z\faireval.exe: go1.27.3
+	path	dsfgo/cmd/faireval
+	mod	dsfgo	(devel)	
+	dep	github.com/davecgh/go-spew	v1.1.1	h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+	dep	github.com/ldsec/lattigo/v2	v2.2.0
+	=>	github.com/ldsec/lattigo/v2	v2.2.1-0.20210923173451-d9eb44f2c43f	h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M=
+	
+	dep	github.com/pmezard/go-difflib	v1.0.0	h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+	dep	github.com/stretchr/testify	v1.7.0	h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
+	dep	golang.org/x/crypto	v0.0.0-20210317152858-513c2a44f670	h1:gzMM0EjIYiRmJI3+jBdFuoynZlpxa2JQZsolKu09BXo=
+	dep	golang.org/x/sys	v0.0.0-20210317225723-c4fcb01b228e	h1:XNp2Flc/1eWQGk5BLzqTAN7fQIwIbfyVTuVxXxZh73M=
+	dep	gopkg.in/yaml.v3	v3.0.0-20210107192922-496545a6307b	h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=
+	dep	veritas/vche	v0.0.0
+	=>	../../external/veritas	(devel)	
+	
+	build	-buildmode=exe
+	build	-compiler=gc
+	build	DefaultGODEBUG=containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,httpcookiemaxnum=0,httplaxcontentlength=1,httpmuxgo121=1,httpservecontentkeepheaders=1,httpservecontentmaxranges=1,multipathtcp=0,randseednop=0,rsa1024min=0,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,tracebacklabels=0,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509sslcertoverrideplatform=0,x509usepolicies=0
+	build	CGO_ENABLED=0
+	build	GOARCH=amd64
+	build	GOOS=windows
+	build	GOAMD64=v1
+	build	vcs=git
+	build	vcs.revision=6da38db9b18ecc0742c03d08e67db6006d15caa0
+	build	vcs.time=2026-11-13T10:14:00Z
+	build	vcs.modified=false

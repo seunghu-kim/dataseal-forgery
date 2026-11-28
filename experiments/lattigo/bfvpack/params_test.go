@@ -7,10 +7,7 @@ import (
 	"github.com/ldsec/lattigo/v2/bfv"
 )
 
-// Parameter-drift guard: the pinned BFV parameter sets must keep the exact ring
-// degree, plaintext modulus, and ciphertext/special-prime bit sizes recorded in
-// the security manifest. A silent upstream parameter change (which would
-// invalidate the security analysis) fails this test.
+// Guards against silent upstream changes to the pinned BFV parameter sets.
 func TestParameterManifestDrift(t *testing.T) {
 	cases := []struct {
 		lit                 bfv.ParametersLiteral

@@ -1,0 +1,245 @@
+{
+  "build_info": {
+    "GoVersion": "go1.27.3",
+    "Path": "dsfgo/cmd/attackeval",
+    "Main": {
+      "Path": "dsfgo",
+      "Version": "(devel)"
+    },
+    "Deps": [
+      {
+        "Path": "github.com/ldsec/lattigo/v2",
+        "Version": "v2.2.0",
+        "Replace": {
+          "Path": "github.com/ldsec/lattigo/v2",
+          "Version": "v2.2.1-0.20210923173451-d9eb44f2c43f",
+          "Sum": "h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M="
+        }
+      },
+      {
+        "Path": "golang.org/x/crypto",
+        "Version": "v0.0.0-20210317152858-513c2a44f670",
+        "Sum": "h1:gzMM0EjIYiRmJI3+jBdFuoynZlpxa2JQZsolKu09BXo="
+      },
+      {
+        "Path": "golang.org/x/sys",
+        "Version": "v0.0.0-20210317225723-c4fcb01b228e",
+        "Sum": "h1:XNp2Flc/1eWQGk5BLzqTAN7fQIwIbfyVTuVxXxZh73M="
+      }
+    ],
+    "Settings": [
+      {
+        "Key": "-buildmode",
+        "Value": "exe"
+      },
+      {
+        "Key": "-compiler",
+        "Value": "gc"
+      },
+      {
+        "Key": "DefaultGODEBUG",
+        "Value": "containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,httpcookiemaxnum=0,httplaxcontentlength=1,httpmuxgo121=1,httpservecontentkeepheaders=1,httpservecontentmaxranges=1,multipathtcp=0,randseednop=0,rsa1024min=0,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,tracebacklabels=0,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509sslcertoverrideplatform=0,x509usepolicies=0"
+      },
+      {
+        "Key": "CGO_ENABLED",
+        "Value": "0"
+      },
+      {
+        "Key": "GOARCH",
+        "Value": "amd64"
+      },
+      {
+        "Key": "GOOS",
+        "Value": "windows"
+      },
+      {
+        "Key": "GOAMD64",
+        "Value": "v1"
+      }
+    ]
+  },
+  "config": {
+    "Repository": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery",
+    "Output": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708",
+    "Metadata": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-newprofiles-20261114-210708-environment.json",
+    "Schema": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\measurement-infrastructure\\20261111-004720\\schema.json",
+    "Validator": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\measurement-infrastructure\\20261111-004720\\offline.exe",
+    "RunID": "A-newprofiles-20261114-210708",
+    "Mode": "independent",
+    "Trials": 20,
+    "Warmups": 1,
+    "Seeds": null,
+    "Sizes": [
+      {
+        "N": 3,
+        "D": 5,
+        "Ell": 2,
+        "Dim": 8
+      },
+      {
+        "N": 8,
+        "D": 8,
+        "Ell": 6,
+        "Dim": 12
+      }
+    ],
+    "Profiles": [
+      "composite",
+      "squaring_only",
+      "addition_only",
+      "matmul_only",
+      "direct_index"
+    ],
+    "Scenarios": [
+      "selective_scaling",
+      "matmul_kernel",
+      "addition_kernel",
+      "square_permute",
+      "square_rescale"
+    ],
+    "NegativeControls": true,
+    "IncludeUnsupported": true,
+    "Arguments": [
+      "C:\\Users\\user\\AppData\\Local\\Temp\\go-build2179650862\\b001\\exe\\attackeval.exe",
+      "--collect",
+      "--repo",
+      "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery",
+      "--out",
+      "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708",
+      "--metadata",
+      "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-newprofiles-20261114-210708-environment.json",
+      "--run-id",
+      "A-newprofiles-20261114-210708",
+      "--mode",
+      "independent",
+      "--trials",
+      "20",
+      "--warmups",
+      "1",
+      "--profiles",
+      "composite,squaring_only,addition_only,matmul_only,direct_index"
+    ]
+  },
+  "exact_operator_command": "go 'run' '-mod=readonly' '-modfile=C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod' './cmd/attackeval' '--collect' '--repo' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery' '--out' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708' '--metadata' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-newprofiles-20261114-210708-environment.json' '--run-id' 'A-newprofiles-20261114-210708' '--mode' 'independent' '--trials' '20' '--warmups' '1' '--profiles' 'composite,squaring_only,addition_only,matmul_only,direct_index'",
+  "go_runtime_version": "go1.27.3",
+  "gomaxprocs_measured": 12,
+  "input_sampling": "fixed/reproduction are never independent-input trials; independent mode uses domain-separated seeded input generation and digest deduplication",
+  "invocation_argv": [
+    "C:\\Users\\user\\AppData\\Local\\Temp\\go-build2179650862\\b001\\exe\\attackeval.exe",
+    "--collect",
+    "--repo",
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery",
+    "--out",
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708",
+    "--metadata",
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-newprofiles-20261114-210708-environment.json",
+    "--run-id",
+    "A-newprofiles-20261114-210708",
+    "--mode",
+    "independent",
+    "--trials",
+    "20",
+    "--warmups",
+    "1",
+    "--profiles",
+    "composite,squaring_only,addition_only,matmul_only,direct_index"
+  ],
+  "legacy_collector": "unchanged positional invocation remains legacy; --collect selects auditable v1",
+  "measurement_clock": {
+    "conversion": "quotient/remainder integer conversion",
+    "frequency_hz": 10000000,
+    "legacy_diagnostic": "nested time.Now/Sub; diagnostic only; its clock reads add small overhead inside primary QPC interval",
+    "source": "Windows QueryPerformanceCounter",
+    "timer_resolution_changed": false,
+    "unit": "ns",
+    "version": "A-attack-QPC-v1"
+  },
+  "root_input_seeds": [
+    1922138390116408617,
+    698933971911464718,
+    11393342710292299357,
+    409971215023396853,
+    6234544112315925275,
+    15026548838045927641,
+    15138994508774880647,
+    11168852793436114273,
+    2007361236263805914,
+    15895179695305426062,
+    3672581243396707221,
+    8721529066555435430,
+    2306252768483694674,
+    4406111539698480059,
+    5102643705523695769,
+    6888855760955184663,
+    11797344425362427371,
+    16906153552185009349,
+    11072207217770633952,
+    4599196920331292272
+  ],
+  "root_seed_source": "fresh crypto/rand uint64 roots, checked for duplicates within measured seed list",
+  "run_id": "A-newprofiles-20261114-210708",
+  "source_sha256": {
+    "experiments/lattigo/attacks/attacks.go": "383bb305780ec90425ffe0d193aabc96902244411de9edbec9ae0570533cbbb2",
+    "experiments/lattigo/attacks/attacks_test.go": "3b95d3c818541a9e3e90540e14cf894481c60d0db9e9b280f227845f1ac53936",
+    "experiments/lattigo/attacks/correctness_test.go": "c9e17a1da024e7d4afdd0283f0a433dd53bc11e187d667def12e85b71e22d4df",
+    "experiments/lattigo/attacks/rotsynth.go": "5b94cf1d17da467065625f3b75336a3eb3c1936b41533c51e142bbc095311211",
+    "experiments/lattigo/attacks/synthwire.go": "5b745a22171f565b6138140199b0c5b96413f9eefe76f1ef1e29816da51778ee",
+    "experiments/lattigo/bfvpack/bfvpack.go": "8773bc6eb583dc14e67f2bbec828a562dd00b84fcd4dac8a6b59a56e2c099c6f",
+    "experiments/lattigo/bfvpack/bfvpack_test.go": "5986e31b20a03ecec03191f549b2bcc09be1ceaf0c3a1d2c563eb1ba08d2f165",
+    "experiments/lattigo/bfvpack/counts_test.go": "8ebf9a60fcbf8540543c9dee4c4a74bf1060c863525b2cab5e9232f6721882d7",
+    "experiments/lattigo/bfvpack/meter.go": "1ea1d972d244f59a1154c9d1c3589d9a21f8c88a87de5cbafa87e5439587c1b6",
+    "experiments/lattigo/bfvpack/meter_test.go": "b9bc2be79b473bfdb2625153e024de349520de3c5ad88b7832d3a7f0305b82bd",
+    "experiments/lattigo/bfvpack/params_test.go": "26f98b732ba6fb02dd13629dc4c092f88dfefd0fdd05d395c0326a87ec8c8024",
+    "experiments/lattigo/bfvpack/plan.go": "9ed5b8bbd14190ed61d477e764ff2a21d72ac8bbb398dc9eb6510c1312a74ab5",
+    "experiments/lattigo/bfvpack/plan_test.go": "c2100922b0079e8b4ccfb2caed7b13122368e42223c03a159f182194665775f2",
+    "experiments/lattigo/bfvpack/prepared_tiled_test.go": "ed526e93cf1acaed90ea6125708108e9dc930586eddaafeac64f3b570372d6f5",
+    "experiments/lattigo/bfvpack/provenance.go": "18340cfe8fd70155a12549dd9594174cf1a845e2479cb5fc07a69209f5711715",
+    "experiments/lattigo/bfvpack/tiled.go": "23c5c6d953b00bdc57eb72454332d1ebb49248ce667fb22ead5f4581831db6d7",
+    "experiments/lattigo/bfvpack/tiled_capacity_test.go": "67a3b1401ce648996af89fdcd33970a216aea9f5fc0e1b866af264c7bb0fb9d6",
+    "experiments/lattigo/bfvpack/tiled_test.go": "936500f2c04176ffd2ca28b0d6235bd0ffb6ed805463c346499d4bc549223f22",
+    "experiments/lattigo/cmd/attackeval/collect.go": "c81b88861cbc9d9d342c32e285b9b47d9b95d0e820dc2295d8654114c1daef3c",
+    "experiments/lattigo/cmd/attackeval/collect_test.go": "46275997108826b6452d5b2f8423bde34937e860099ae8c928997f7949aeeeb2",
+    "experiments/lattigo/cmd/attackeval/main.go": "369237790d584ed41e1ed8004e2c45f0de57a9ff179d7c6b0051aa2bb24963e0",
+    "experiments/lattigo/dataseal/dataseal.go": "a46db777cd33abd44a758564cad04fee1df8b48019d06621f8f7d37674473f8f",
+    "experiments/lattigo/dataseal/dataseal_test.go": "6a445d2e0e02ab1445a8132dd35f7bc6678d7d106bcc52adce9bba59f583e769",
+    "experiments/lattigo/experimenta/clock_windows.go": "95df0eeb3d51541bf6b2d0875a045c30a3c61ffdeff6b49831d36a1d8baa6428",
+    "experiments/lattigo/experimenta/clock_windows_test.go": "194ccb05543c831ceaa1dd9e84e2c158960b69f9d99e0600cdffabe158d767a4",
+    "experiments/lattigo/experimenta/config.go": "3e4eade32524f8a3c3945ce1d132c21a138e0a8eeb809e300afb9750b10fffd3",
+    "experiments/lattigo/experimenta/diagnosis.go": "afb55292d8bab1f41c0ba0837c144467472e5e2b6022a4a3c24cd7e169d8d4c4",
+    "experiments/lattigo/experimenta/diagnosis_test.go": "ffb8520c43fa003a2fc4d6922066d2d90fb045d4c50e619460ef172dc1ae49a2",
+    "experiments/lattigo/experimenta/inputs.go": "e8ebce85c9ecbcbec5e087abe2c56da3f8f1711278830ea089886247e72cac9e",
+    "experiments/lattigo/experimenta/pipeline.go": "ff7bb1603714e0e9ad2f01f5ec5a027a247383b19d99faaf7fcaab4a7377ba62",
+    "experiments/lattigo/experimenta/provision.go": "8136ff1e8c3cf5bafa084e8afc42a1b28b6eda91858b854419369ba9d9a27b66",
+    "experiments/lattigo/experimenta/provision_test.go": "f9cbbaefe0a3cff08bb4133b3d664aff7938754e7c1b99346e51fdc4cdbe6087",
+    "experiments/lattigo/experimenta/record.go": "f0f4632f8b3d174456b3b63324045d26895250f87171266730838392da6b5b5c",
+    "experiments/lattigo/experimenta/record_test.go": "4985a3ae26fa26f7799f86122f075de03308cac9bc56b5a394acabcb2f147f47",
+    "experiments/lattigo/experimenta/run.go": "bb5dba2420778682602dae48b74506a6f35c1a6b59b68e71b48ea063ea68b1ed",
+    "experiments/lattigo/experimenta/validatormap.go": "02b5e3ad9137f867c6a3206c88607ee47a2f5f592c89fb9bf21fa2011b37cfe6"
+  },
+  "timestamp_utc": "2026-11-14T12:07:12.5507305Z",
+  "timing_boundary": {
+    "batch": 1,
+    "definition": "Experiment A: preparation, keygen, input encryption, honest baseline evaluation/decryption, existing attack evaluation, returned-output decryption, diagnostic analysis and this verifier; excludes context startup, metadata, serialization and other verifiers",
+    "errors": "stage durations are elapsed-until-error when interrupted; failed timing stage identified separately",
+    "evaluation": "existing attack function only; includes its plaintext mask construction/encoding and its internal relinearization; excludes honest evaluation and returned decryption",
+    "included_stages": [
+      "preparation",
+      "key_generation",
+      "encryption",
+      "honest_evaluation",
+      "honest_decryption",
+      "evaluation",
+      "decryption",
+      "analysis",
+      "verification"
+    ],
+    "preparation": "input generation, original DataSeal encoding, plaintext references, mathematical preconditions",
+    "total": "sum of two disjoint observed intervals: shared pipeline wall interval plus this verifier interval; not a monolithic wall time and not a sum of stage medians",
+    "unit": "ns",
+    "verification": "original DataSeal verifier and Accepted only; multiple verifier records share one paired ciphertext"
+  },
+  "timing_boundary_version": "A-attack-QPC-v1",
+  "warmup_input_seeds": [
+    11711119884820267341
+  ]
+}

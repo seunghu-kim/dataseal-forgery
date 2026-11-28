@@ -1,6 +1,5 @@
-// Package attacks ports the ciphertext-level DataSeal verification-consistency
-// experiments (src/he_attacks.cpp) to Lattigo BFV row-major ciphertexts. Every
-// function uses only server-visible data and the declared evaluation keys.
+// Package attacks implements the ciphertext-level attacks on DataSeal verification,
+// using only server-visible data and the provisioned evaluation keys.
 package attacks
 
 import (
@@ -8,11 +7,11 @@ import (
 	"dsfgo/field"
 )
 
-// KernelChoice selects two input columns and the output column h is aligned to.
+// KernelChoice selects the two input columns and the output column of the kernel attack.
 type KernelChoice struct{ ColA, ColB, Target int }
 
-// SelectiveScaling multiplies data rows and the first checksum row (rows 0..n)
-// by a public scalar, leaving the golden-output row (n+1) unchanged.
+// SelectiveScaling is the selective multiplication attack with R = cI: rows 0..n
+// are multiplied by c and the golden row n+1 is left unchanged.
 func SelectiveScaling(k bfvpack.Keys, f field.Field, evaluated bfvpack.Cipher, n int, factor uint64) bfvpack.Cipher {
 	l := evaluated.Layout
 	mask := make([]uint64, lenSlots(k))
@@ -28,8 +27,7 @@ func SelectiveScaling(k bfvpack.Keys, f field.Field, evaluated bfvpack.Cipher, n
 	return k.MulMask(evaluated, mask)
 }
 
-// encryptedKernelColumn builds h_i = w_b*A_{i,a} - w_a*A_{i,b} in the target
-// column of the data rows, using only ciphertext ops and public masks.
+// encryptedKernelColumn builds h_i = w_b*A_{i,a} - w_a*A_{i,b} in the target column.
 func encryptedKernelColumn(k bfvpack.Keys, encodedInput bfvpack.Cipher, n int, choice KernelChoice) bfvpack.Cipher {
 	a := selectDataColumn(k, encodedInput, n, choice.ColA, choice.Target)
 	b := selectDataColumn(k, encodedInput, n, choice.ColB, choice.Target)
@@ -40,8 +38,8 @@ func encryptedKernelColumn(k bfvpack.Keys, encodedInput bfvpack.Cipher, n int, c
 	return k.Sub(p, q)
 }
 
-// KernelAdjustedOutput adds the encrypted kernel column to an evaluated output
-// without touching its checksum rows.
+// KernelAdjustedOutput is the kernel attack: it adds h (k^T h = 0) to the output
+// and leaves the checksum rows unchanged.
 func KernelAdjustedOutput(k bfvpack.Keys, encodedInput, evaluated bfvpack.Cipher, n int, choice KernelChoice) bfvpack.Cipher {
 	h := encryptedKernelColumn(k, encodedInput, n, choice)
 	return k.Add(evaluated, h.WithLayout(evaluated.Layout))
@@ -54,7 +52,7 @@ func selectDataColumn(k bfvpack.Keys, src bfvpack.Cipher, n, fromCol, toCol int)
 		mask[l.Slot(i, fromCol)] = 1
 	}
 	selected := k.MulMask(src, mask)
-	return k.RotateCols(selected, fromCol-toCol)
+	return synthRotate(k, selected, fromCol-toCol)
 }
 
 func broadcastChecksum(k bfvpack.Keys, src bfvpack.Cipher, n, checksumCol, targetCol int) bfvpack.Cipher {
@@ -62,20 +60,17 @@ func broadcastChecksum(k bfvpack.Keys, src bfvpack.Cipher, n, checksumCol, targe
 	mask := make([]uint64, lenSlots(k))
 	mask[l.Slot(n, checksumCol)] = 1
 	single := k.MulMask(src, mask)
-	// single has one nonzero logical slot; bring checksum row n to row 0 and
-	// align its column, then replicate down the n data rows.
-	firstRow := k.RotateCols(single, n*l.Dim)
-	aligned := k.RotateCols(firstRow, checksumCol-targetCol)
+	// Bring checksum row n to row 0, align its column, then replicate down the data rows.
+	firstRow := synthRotate(k, single, n*l.Dim)
+	aligned := synthRotate(k, firstRow, checksumCol-targetCol)
 	out := aligned
 	for i := 1; i < n; i++ {
-		out = k.Add(out, k.RotateCols(aligned, -i*l.Dim))
+		out = k.Add(out, synthRotate(k, aligned, -i*l.Dim))
 	}
 	return out
 }
 
-// Square attacks ---------------------------------------------------------
-
-// SquarePermute swaps two data rows in one column (leaving checksum rows fixed).
+// SquarePermute is the permutation attack: it swaps two data rows within one column.
 func SquarePermute(k bfvpack.Keys, evaluated bfvpack.Cipher, n, r1, r2, col int) bfvpack.Cipher {
 	l := evaluated.Layout
 	keep := ones(lenSlots(k))
@@ -89,12 +84,13 @@ func SquarePermute(k bfvpack.Keys, evaluated bfvpack.Cipher, n, r1, r2, col int)
 	row1 := k.MulMask(evaluated, sel1)
 	row2 := k.MulMask(evaluated, sel2)
 	shift := (r1 - r2) * l.Dim
-	moved1 := k.RotateCols(row1, shift)
-	moved2 := k.RotateCols(row2, -shift)
+	moved1 := synthRotate(k, row1, shift)
+	moved2 := synthRotate(k, row2, -shift)
 	return k.Add(k.Add(rest, moved1), moved2)
 }
 
-// SquareRescale multiplies two entries of one column by gamma and gamma^-1.
+// SquareRescale is the compensating rescaling attack: two entries of one column
+// are multiplied by gamma and gamma^-1.
 func SquareRescale(k bfvpack.Keys, f field.Field, evaluated bfvpack.Cipher, col, r1, r2 int, gamma uint64) bfvpack.Cipher {
 	l := evaluated.Layout
 	mask := ones(lenSlots(k))

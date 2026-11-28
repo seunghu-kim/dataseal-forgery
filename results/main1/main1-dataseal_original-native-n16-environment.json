@@ -1,0 +1,204 @@
+{
+  "available_ram_bytes": 10684448768,
+  "bfv_parameter_profiles_operator_supplied": [
+    "PN14QP438"
+  ],
+  "collector_gomaxprocs": 1,
+  "collector_runtime_version": "go1.27.3",
+  "cpu_model": "AMD Ryzen 5 2600 Six-Core Processor            ",
+  "dependencies": [
+    {
+      "content": "module dsfgo\r\n\r\ngo 1.21\r\n\r\nrequire github.com/ldsec/lattigo/v2 v2.2.0\r\n\r\nrequire (\r\n\tgithub.com/davecgh/go-spew v1.1.1 // indirect\r\n\tgithub.com/pmezard/go-difflib v1.0.0 // indirect\r\n\tgithub.com/stretchr/testify v1.7.0 // indirect\r\n\tgolang.org/x/crypto v0.0.0-20210317152858-513c2a44f670 // indirect\r\n\tgopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect\r\n)\r\n\r\nreplace github.com/ldsec/lattigo/v2 v2.2.0 =\u003e github.com/ldsec/lattigo/v2 v2.2.1-0.20210923173451-d9eb44f2c43f\r\n\r\nrequire veritas/vche v0.0.0\r\n\r\nreplace veritas/vche =\u003e ../../external/veritas\r\n",
+      "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\experiments\\lattigo\\go.mod",
+      "sha256": "4ed2bf2c49fb1ad0d6c3c2d625b894a3dfde92185dfb0a9baf9545c542c1a1b3"
+    },
+    {
+      "content": "github.com/DmitriyVTitov/size v1.1.0/go.mod h1:asVR2J1mZ/2yIobW+JomrhJb90qWzWMyuFJs1BX89+Y=\r\ngithub.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=\r\ngithub.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=\r\ngithub.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=\r\ngithub.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=\r\ngithub.com/kr/pretty v0.2.1/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfnI=\r\ngithub.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=\r\ngithub.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=\r\ngithub.com/kr/text v0.2.0/go.mod h1:eLer722TekiGuMkidMxC/pM04lWEeraHUUmBw8l2grE=\r\ngithub.com/ldsec/lattigo/v2 v2.2.1-0.20210923173451-d9eb44f2c43f h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M=\r\ngithub.com/ldsec/lattigo/v2 v2.2.1-0.20210923173451-d9eb44f2c43f/go.mod h1:SRD19FRy5S8KWCHMjQCSac6wp7BHD65D0IaMFAysY2Q=\r\ngithub.com/petar/GoMNIST v0.0.0-20150320212226-2fbe10d0fa63/go.mod h1:d7fwuOuDrb75/3iplL4oWbe4MBZgWil/pSVR3ItECVU=\r\ngithub.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=\r\ngithub.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=\r\ngithub.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=\r\ngithub.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=\r\ngithub.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=\r\ngolang.org/x/crypto v0.0.0-20210317152858-513c2a44f670 h1:gzMM0EjIYiRmJI3+jBdFuoynZlpxa2JQZsolKu09BXo=\r\ngolang.org/x/crypto v0.0.0-20210317152858-513c2a44f670/go.mod h1:T9bdIzuCu7OtxOm1hfPfRQxPLYneinmdGuTeoZ9dtd4=\r\ngolang.org/x/net v0.0.0-20210226172049-e18ecbb05110/go.mod h1:m0MpNAwzfU5UDzcl9v0D8zg8gWTRqZa9RBIspLL5mdg=\r\ngolang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\r\ngolang.org/x/sys v0.0.0-20210317225723-c4fcb01b228e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\r\ngolang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=\r\ngolang.org/x/text v0.3.3/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=\r\ngolang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=\r\ngopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=\r\ngopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=\r\ngopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=\r\ngopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=\r\ngopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=\r\n",
+      "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\experiments\\lattigo\\go.sum",
+      "sha256": "ce78891583f733eca456d0b3faa8ad168a2de1867a141a20a810bd3c5b1f2d11"
+    },
+    {
+      "content": {
+        "clone_path": "external/veritas (gitignored, not tracked)",
+        "commit": "6e58ab505f81c03c1b71ffaf0dc29205293ba15a",
+        "he_library": "Lattigo BFV",
+        "language": "Go 1.15 (module), built with local Go 1.23.4",
+        "lattigo_pin": {
+          "go_sum_hash": "h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M=",
+          "module": "github.com/ldsec/lattigo/v2",
+          "version": "v2.2.1-0.20210923173451-d9eb44f2c43f"
+        },
+        "modules": {
+          "bfv_generic": "plain Lattigo BFV wrapper (baseline, no verification)",
+          "vche": "encoding-agnostic VERITAS components",
+          "vche_1": "REP encoding",
+          "vche_1_CFPRF": "REP with PRF optimization (tests)",
+          "vche_2": "PE encoding",
+          "vche_2_CFPRF": "PE with PRF optimization (tests)"
+        },
+        "note": "REP = replication encoding (vche_1); PE = polynomial encoding (vche_2). Optimized variants are the *_CFPRF modules. Dependencies isolated under external/; system Go and /usr/local untouched.",
+        "repository": "https://github.com/ldsec/veritas"
+      },
+      "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\configs\\veritas.lock.json",
+      "sha256": "0128b68df7a211faa134cdd73bdd3bb7cdc36c3defe476d98fd7599540bd1efb"
+    },
+    {
+      "content": {
+        "bfv_profile_candidate": {
+          "lattigo_param_set": "PN14QP438",
+          "logQ": 438,
+          "note": "VERITAS vche_1/vche_2 benchmarks use PN14QP438. t=65537 must satisfy BFV batching (2N | t-1): 2*16384=32768 divides 65536. Verified candidate common profile; final profile confirmed in G2/G5.",
+          "plaintext_modulus_t": 65537,
+          "ring_degree_N": 16384
+        },
+        "build_status": {
+          "g7_128_strategy": "Single comparison group PN14: n\u003c=64 single ciphertext, n=128 tiled (T=64) reusing the verified PublicRightMatmul kernel + ct-ct adds. bfvpack.PlanMatmul is a deterministic planner (plan_test.go); tiled_test.go round-trips 8^3, 130x128, 128x128, rectangular, sub-tile. PN15QP880 (N=32768, t=65537, 2N|t-1) validated as single-ciphertext alternative for bfv_only/sketch 128 (TestSingleCtPN15_128); DataSeal 128 (130^2=16900 \u003e PN15 half 16384) has no single-ciphertext layout in the registry. PN16 intentionally excluded.",
+          "g8_veritas_authenticated_matmul": "REP (vche_1) and PE (vche_2) public-right matmul C=A*B (A confidential, B public) implemented from official authenticated RotateColumns + Mul(ct, tagged PlaintextMul) + Add, verified via official DecodeUint. veritas/matmul_test.go confirms exact F_p result, official-verifier acceptance, and rejection on ciphertext/tag mismatch for sizes up to NSlots/2 (REP PN13 numReplications=4 -\u003e dim\u003c=32; PE PN13 -\u003e dim\u003c=64). Upgrades the prior METHOD_MISMATCH to PASS for supported sizes. REP/PE run at PN13 native params: PARAMETER_MISMATCH vs the PN14 BFV group (no absolute-time comparison). Composition (A*B1+D)*B2 remains METHOD_MISMATCH (not implemented).",
+          "g9_finding_checksum_tiling_overhead": "Corrects the earlier 'checksum overhead ~ 0' claim: it holds only while the checksum fits the same single ciphertext. Under 128 tiling the two DataSeal checksum rows add a third block row, raising tile multiplies 8-\u003e12 and measured server time ~9.7s -\u003e ~14.5s (~1.5x). Raw: results/lattigo/final/matmul_sweep.json.",
+          "lattigo_bfv": "downloads pinned version and builds/runs (BFV smoke works)",
+          "own_go_module": "builds and runs (go test on self-written module passes)",
+          "veritas_pe_vche_2": "builds and runs; matched add/square integrated and verified in G3",
+          "veritas_rep_vche_1": "builds and runs; benchmarks run (Add 0.12ms, Mul deg1 11.3ms, Relin 5.9ms at N=16384). Upstream TestVCHE1 fails the Type2Fails negative subtests (Add/Sub/Rotate...) ONLY at the LogN=16 / NumReplications=1 (PN16) parameter set. VERIFIED this is NOT a Go-toolchain artifact: it reproduces identically under Go 1.16 (earliest arm64 toolchain, contemporaneous with the module's go 1.15 directive). Cause is structural: at NumReplications=1 there is no replication redundancy, so verifyUint cannot detect a consistently-manipulated ciphertext. Smaller sets (NumReplications=64) pass these negative tests."
+        },
+        "go_version": "go1.23.4 darwin/arm64",
+        "lattigo": {
+          "declared_in_veritas_gomod": "github.com/ldsec/lattigo/v2 v2.2.0",
+          "effective_pinned_replacement": "github.com/ldsec/lattigo/v2 v2.2.1-0.20210923173451-d9eb44f2c43f",
+          "go_sum_hash": "h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M=",
+          "note": "The replace directive lives in the VERITAS module. A separate main module must re-declare the same replace at main-module level; the experiments/lattigo go.mod does so."
+        },
+        "veritas": {
+          "checkout_path": "external/veritas (gitignored, untouched upstream)",
+          "commit": "6e58ab505f81c03c1b71ffaf0dc29205293ba15a",
+          "repository": "https://github.com/ldsec/veritas"
+        }
+      },
+      "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\configs\\lattigo_bfv.lock.json",
+      "sha256": "31e8a7962cce131e4991a20d8d6978a9c8a5d876f0bae36505b700f935768764"
+    },
+    {
+      "content": {
+        "compiler": "AppleClang 15.0.0",
+        "cxx_standard": 17,
+        "openfhe": {
+          "build": {
+            "BUILD_STATIC": false,
+            "CMAKE_BUILD_TYPE": "Release",
+            "MATHBACKEND": 4,
+            "NATIVE_SIZE": 64,
+            "WITH_NATIVEOPT": false,
+            "WITH_OPENMP": true
+          },
+          "commit": "b59e1f291965f14fbee5172cd83a20f5b856204f",
+          "install_prefix": "/usr/local",
+          "local_patches": [],
+          "repository": "https://github.com/openfheorg/openfhe-development",
+          "tag": "v1.6.1"
+        }
+      },
+      "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\configs\\deps.lock.json",
+      "sha256": "8b4fcba8b2794bd6a0e6601270e625069be60d10bbdf08b12fe06ecc28315e1d"
+    },
+    {
+      "content": "module veritas/vche\r\n\r\ngo 1.15\r\n\r\nrequire (\r\n\tgithub.com/DmitriyVTitov/size v1.1.0\r\n\tgithub.com/ldsec/lattigo/v2 v2.2.0\r\n\tgithub.com/petar/GoMNIST v0.0.0-20150320212226-2fbe10d0fa63\r\n\tgithub.com/stretchr/testify v1.7.0\r\n\tgolang.org/x/crypto v0.0.0-20210317152858-513c2a44f670\r\n)\r\n\r\nreplace github.com/ldsec/lattigo/v2 v2.2.0 =\u003e github.com/ldsec/lattigo/v2 v2.2.1-0.20210923173451-d9eb44f2c43f\r\n",
+      "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\external\\veritas\\go.mod",
+      "sha256": "265a2181e839ad657b3021dd3e81fc2851658226cee1c7ae929a31fe9b6ee3a7"
+    }
+  ],
+  "exact_experiment_command_operator_supplied": "GOMAXPROCS=1 C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main1-20261113T080848Z\\faireval.exe '--repo' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery' '--out' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main1-20261113T080848Z\\main1-dataseal_original-native-n16' '--metadata' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\B-fair-v3-main1-20261113T080848Z\\main1-dataseal_original-native-n16-environment.json' '--run-id' 'B-fair-v3-main1-20261113T080848Z-main1-dataseal_original-native-n16' '--modfile' 'C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A1-reproduction-20261111-001417\\reproduction.mod' '--sizes' '16' '--methods' 'dataseal_original' '--packings' 'native' '--trials' '20' '--warmups' '1' '--seed' '1' '--pe-t' '18014398507614209' '--stop-on-error'",
+  "git_commit": {
+    "command": [
+      "git",
+      "--no-optional-locks",
+      "rev-parse",
+      "HEAD"
+    ],
+    "status": "completed",
+    "stdout_stderr": "1c1e4df705367545b2a6a57e8075cf49e81ace5b"
+  },
+  "go_version": {
+    "command": [
+      "go",
+      "version"
+    ],
+    "status": "completed",
+    "stdout_stderr": "go version go1.27.3 windows/amd64"
+  },
+  "he_security_target_bits": 128,
+  "he_security_verified_bits": "not_measured",
+  "logical_cores": 12,
+  "machine_id": "machine-1",
+  "metadata_id": "env-20261113T081605.364661100Z",
+  "notes": "Read-only metadata snapshot, not proof of fresh trial provenance. Collector GOMAXPROCS is not an experiment process measurement. No settings changed. Dependency lock contents are declarations, not proof that cached source matches them.",
+  "operator_command_executed": false,
+  "os": "windows",
+  "os_version": "Microsoft Windows 10 Pro 10.0.19045 build 19045",
+  "physical_cores": 6,
+  "platform_probe": {
+    "command": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-Command",
+      "$o=Get-CimInstance Win32_OperatingSystem; $p=@(Get-CimInstance Win32_Processor); [pscustomobject]@{os_version=($o.Caption+' '+$o.Version+' build '+$o.BuildNumber); cpu_model=($p.Name -join '; '); physical_cores=($p|Measure-Object NumberOfCores -Sum).Sum; logical_cores=($p|Measure-Object NumberOfLogicalProcessors -Sum).Sum; available_ram_bytes=([uint64]$o.FreePhysicalMemory*1024); total_ram_bytes=([uint64]$o.TotalVisibleMemorySize*1024)} | ConvertTo-Json -Compress"
+    ],
+    "status": "completed",
+    "stdout_stderr": "{\"os_version\":\"Microsoft Windows 10 Pro 10.0.19045 build 19045\",\"cpu_model\":\"AMD Ryzen 5 2600 Six-Core Processor            \",\"physical_cores\":6,\"logical_cores\":12,\"available_ram_bytes\":10684448768,\"total_ram_bytes\":17111433216}"
+  },
+  "repetition_count_operator_supplied": 20,
+  "schema_version": "dataseal.environment.v1",
+  "sketch_assumptions": {
+    "Q_auth_max": 4294967296,
+    "p": 65537,
+    "r": 10
+  },
+  "thread_environment": {
+    "GODEBUG": "unset",
+    "GOFLAGS": "-mod=readonly",
+    "GOMAXPROCS": "1",
+    "MKL_NUM_THREADS": "unset",
+    "NUMEXPR_NUM_THREADS": "unset",
+    "OMP_DYNAMIC": "unset",
+    "OMP_NUM_THREADS": "unset",
+    "OPENBLAS_NUM_THREADS": "unset",
+    "VECLIB_MAXIMUM_THREADS": "unset"
+  },
+  "time_unit": "ns",
+  "timestamp_utc": "2026-11-13T08:16:05.3646611Z",
+  "timing_boundary_operator_supplied": "B-fair-v3 main phase 1: common S1..S9 QPC boundary (see BOUNDARY.md), one process per cell, GOMAXPROCS=1",
+  "total_ram_bytes": 17111433216,
+  "veritas_git_commit": {
+    "command": [
+      "git",
+      "-C",
+      "external/veritas",
+      "rev-parse",
+      "HEAD"
+    ],
+    "status": "completed",
+    "stdout_stderr": "6e58ab505f81c03c1b71ffaf0dc29205293ba15a"
+  },
+  "veritas_working_tree": {
+    "command": [
+      "git",
+      "-C",
+      "external/veritas",
+      "status",
+      "--porcelain=v1"
+    ],
+    "status": "completed",
+    "stdout_stderr": ""
+  },
+  "warmup_count_operator_supplied": 1,
+  "working_tree": {
+    "command": [
+      "git",
+      "--no-optional-locks",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "status": "completed",
+    "stdout_stderr": ""
+  }
+}

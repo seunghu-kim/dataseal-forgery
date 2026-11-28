@@ -1,119 +1,99 @@
-# DataSeal verification study — research artifact
+# DataSeal Attack and Efficiency Experiments
 
-Research artifact studying verification failures in **DataSeal** (an ABFT-style
-verifiable FHE scheme) and a **private-sketch linear repair** for its linear
-functionality. The final evaluated homomorphic implementation is **Go + the
-Lattigo v2 BFV backend pinned by the upstream VERITAS project**. A C++/OpenFHE
-implementation is retained as a read-only correctness reference, not a final
-benchmark backend.
+This repository contains the experimental implementation of ciphertext-level attacks on DataSeal and an efficiency comparison of BFV, DataSeal, the modified scheme, and VERITAS. All implementations are written in Go using Lattigo v2 with the BFV scheme.
 
-> This README states only what is implemented and measured. Cryptographic HE
-> bit-security is **not** asserted here; see `docs/security_parameters.md` for
-> its status (estimator-dependent).
+## Requirements
 
-## Scientific scope
+- Go 1.21 or later (Go 1.27.3 used for the reported experiments)
+- Windows 10 and PowerShell for experiments
+- Git Bash for building and testing on Windows
+- Network access for dependency installation
 
-- **Ciphertext-level cryptanalysis (main contribution):** transformations a
-  server can apply to encrypted, checksum-encoded matrices so that a DataSeal
-  verifier accepts an output that is wrong (`accepted && wrong_output`). Each
-  trial is classified by the evaluation-key capability it requires
-  (`honest_minimal` vs `extended`); see `reports/ciphertext_attack_evaluation.md`.
-- **Private-sketch repair:** a client-only sketch key `K (r×n)` that verifies
-  the *linear* (public-right-matmul / affine) functionality DataSeal gets wrong;
-  demonstrated with composition `(A·B1 + D)·B2`. No general nonlinear repair is
-  claimed.
-- **Performance:** public-right matrix multiplication `A(n×d)·B(d×ell)` with `A`
-  confidential and `B` public, compared across FHE-only, DataSeal
-  Original/Strengthened, private-sketch, and official VERITAS REP/PE.
-  Addition and pointwise squaring are also supported.
+Linux and macOS are supported for building and testing.
 
-## Layout
+## Build and Test
 
-```
-experiments/lattigo/        Go module `dsfgo` (final implementation)
-  field, matrix             F_p reference arithmetic
-  dataseal                  DataSeal encoders/verifiers (original/strengthened/appendix, add, corrected squaring)
-  sketch                    private-sketch key K, register, program, prepare, verify
-  bfvpack                   BFV row-major packing, public-right matmul (prepare/server split), tiling, capacity planner
-  attacks                   ciphertext-level transformations (server-visible ops only)
-  veritas                   adapters over official VERITAS REP (vche_1) / PE (vche_2)
-  cmd/                      planreport, parammanifest, finaleval (F5 bench), attackeval (F4), bench/finalbench (historical)
-include/, src/, tests/      C++/OpenFHE read-only reference + ctest suite
-configs/                    pinned dependency / parameter locks
-scripts/                    reproducibility scripts
-docs/, reports/, results/   analysis, methodology audits, raw machine-readable data (git-ignored; regenerate with scripts/)
+```bash
+bash scripts/build_and_test.sh
 ```
 
-## Environment & pins
+This script retrieves the pinned VERITAS implementation, builds the experiment tools, and runs the tests.
 
-- Go 1.21+ (tested go1.23.4 darwin/arm64).
-- Lattigo pinned via `experiments/lattigo/go.mod`:
-  `github.com/ldsec/lattigo/v2 v2.2.1-0.20210923173451-d9eb44f2c43f`.
-- Official VERITAS is an **external pinned checkout** (not vendored):
-  ```
-  git clone https://github.com/ldsec/veritas external/veritas
-  git -C external/veritas checkout 6e58ab505f81c03c1b71ffaf0dc29205293ba15a
-  ```
-  `experiments/lattigo/go.mod` re-declares the same Lattigo `replace` and maps
-  `veritas/vche => ../../external/veritas`. Upstream VERITAS is used unmodified.
-- C++ reference needs OpenFHE 1.6.1 + CMake (optional; only for the ctest
-  reference).
-- Lattice-estimator (Task A, optional): `malb/lattice-estimator` under SageMath;
-  see `docs/security_parameters.md`.
+To build without running tests:
 
-## Quick smoke test (deterministic, small)
-
-```
-cd experiments/lattigo
-go build ./... && go vet ./...
-go test ./dataseal/ ./sketch/ ./field/ ./matrix/        # fast F_p + protocol checks
-go test ./veritas/ -run TestRepMatmulAuthenticated       # official REP verification
-go run ./cmd/parammanifest /tmp/param_manifest.json      # actual pinned BFV parameters
+```bash
+bash scripts/build_and_test.sh --no-test
 ```
 
-`go test ./bfvpack/` includes the 128-size round-trips and is slower (minutes);
-it is the opt-in large path.
+## Repository Structure
 
-## Reproduce the final experiments
+| Path | Description |
+|---|---|
+| `experiments/lattigo/field` | Finite-field arithmetic |
+| `experiments/lattigo/matrix` | Plaintext matrix operations |
+| `experiments/lattigo/dataseal` | DataSeal encoding and verification |
+| `experiments/lattigo/sketch` | Modified scheme |
+| `experiments/lattigo/attacks` | Ciphertext-level attacks |
+| `experiments/lattigo/bfvpack` | BFV packing and matrix operations |
+| `experiments/lattigo/veritas` | VERITAS PE and REP implementations |
+| `experiments/lattigo/attackrun` | Attack experiment pipeline |
+| `experiments/lattigo/cmd` | Experiment entry points |
+| `tools/validator` | Experiment record validation |
+| `scripts` | Build, execution, and aggregation scripts |
+| `configs` | Dependency and parameter configurations |
+| `results` | Experimental results |
 
+## Reproducing the Experiments
+
+Run the following commands from the repository root in PowerShell. Use new output directories for each experiment.
+
+### Attack Analysis
+
+```powershell
+.\scripts\run_attack.ps1 -Out out\attack
+.\scripts\aggregate_attack.ps1 -Run out\attack
 ```
-bash scripts/run_final_evaluation.sh      # env capture, C++ ctest, go test, manifest, attackeval, finaleval
-# HE security estimate (manual, needs SageMath):
-sage results/security/estimate_security.sage results/security/param_manifest.json
+
+### Efficiency Analysis
+
+```powershell
+.\scripts\run_efficiency.ps1 -Campaign main1 -Out out\main1
+.\scripts\run_efficiency.ps1 -Campaign main2 -Out out\main2
+
+.\scripts\aggregate_matmul.ps1 -Campaign out\main1
+.\scripts\aggregate_matmul.ps1 -Campaign out\main2
+
+.\scripts\combine_matmul.ps1 -Phase1 out\main1\summary_wide.csv -Phase2 out\main2\summary_wide.csv -OutDir out
+
+.\scripts\figure2_data.ps1 -Main1 out\main1 -Main2 out\main2 -OutDir out
 ```
 
-Outputs land under `results/` (git-ignored); each raw snapshot is regenerated
-from the committed code by the scripts above.
+`main1` covers n = 8, 16, 32, and `main2` covers n = 64, 128. Interrupted campaigns can be resumed with `-Resume`.
 
-## Reading the results
+### Composition and Additional Workloads
 
-- `accepted && wrong_output` = a forged result the verifier accepted.
-- `honest_minimal` = only the evaluation keys the honest function distributes;
-  `extended` = additional relinearization/rotation keys. A forgery that needs
-  `extended` keys is **not** a direct attack under honest outsourcing.
-- Comparability flags: `PASS` (matched & verified), `PARAMETER_MISMATCH`
-  (different HE profile, e.g. REP/PE PN13 vs the PN14 group — absolute times not
-  comparable), `METHOD_MISMATCH` (operation not implemented as a matched unit),
-  `NOT_SECURITY_MATCHED` (different authentication models).
-- Timing boundaries: `server_eval` is server-only ciphertext work;
-  `program_prep` is public-program (mask/expected-value) preparation;
-  client cost = input_prep + program_prep + decrypt + verification (see
-  `reports/final_benchmark_methodology_audit.md`).
+```powershell
+.\scripts\run_efficiency.ps1 -Campaign workloads -Out out\workloads
+.\scripts\aggregate_workloads.ps1 -Campaign out\workloads
+```
 
-## Boundaries (important)
+### Comparison with a Single Secret Vector (r = 1)
 
-- **FHE-only is not authenticated** — it has no verifier; it is a correctness/
-  performance baseline, reported with `accepted = N/A`, never in an acceptance
-  table.
-- Comparable HE confidentiality does **not** imply equal authentication
-  soundness. DataSeal, private-sketch, REP, and PE use different authentication
-  models.
-- VERITAS REP/PE run at their native PN13 parameters; their absolute timings are
-  **not** comparable to the PN14 BFV group.
-- The full client cost includes preprocessing + decryption + verification, not
-  verification alone.
-- Private-sketch soundness `Pr[Forge] ≤ min(1, Q_auth · p^{-r})` is an analytic
-  bound under the paper's model, not a timing result; `r=1` is not `r=10`.
+```powershell
+.\scripts\run_efficiency.ps1 -Campaign sketch-r1 -Out out\sketch-r1
+.\scripts\aggregate_sketch_r1.ps1 -Campaign out\sketch-r1 -Main1 out\main1 -Main2 out\main2
+```
 
-See `LICENSE` for this artifact; upstream VERITAS keeps its own license under
-`external/veritas`.
+The r = 1 experiments intentionally do not satisfy the validator's r = 10 requirement.
+
+## Experimental Results
+
+The `results/` directory contains raw measurements, experimental configurations, environment records, validation reports, and aggregated results.
+
+The reported experiments were conducted on an AMD Ryzen 5 2600 machine with 16 GB of RAM running Windows 10. Attack computations run serially, and efficiency experiments use `GOMAXPROCS=1`.
+
+User and host names in the stored records were anonymized, and two descriptive note strings were translated into English. Consequently, some recorded file hashes no longer match. No measured values were changed.
+
+## License
+
+See `LICENSE`. VERITAS retains its original license.

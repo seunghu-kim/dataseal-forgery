@@ -1,0 +1,14 @@
+{
+  "input_metadata": {
+    "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-newprofiles-20261114-210708-environment.json",
+    "sha256": "81e9e2780e0c44486b781dacecbbfa457491100f4ae2e73c02a52347ca178dfd"
+  },
+  "offline_validator": {
+    "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\measurement-infrastructure\\20261111-004720\\offline.exe",
+    "sha256": "7f6d3f415938b475a98841fa27abea44a69f5e31286cf310c1775196cc65c3e9"
+  },
+  "schema": {
+    "path": "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\measurement-infrastructure\\20261111-004720\\schema.json",
+    "sha256": "b7daa3e88eb1694bd95df44df716449f2232ab16db1c12bbf3ae5becb33ae705"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "Records": 1912,
+  "Evaluations": 1071,
+  "ExecutionStatuses": {
+    "completed": 924,
+    "panic": 987,
+    "unsupported_configuration": 1
+  },
+  "IndependentInputUnits": 200,
+  "ObservationUnit": "records are per verifier; paired_ciphertext_id shares an execution; input hashes, not encryption randomness, identify distinct inputs"
+}

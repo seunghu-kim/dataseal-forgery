@@ -9,7 +9,6 @@ import (
 	"dsfgo/matrix"
 )
 
-// Attempt classifies a ciphertext-executed transformation outcome.
 type Attempt struct {
 	Accepted, Wrong, Unchanged bool
 }
@@ -36,7 +35,6 @@ func fixture() (bfvpack.Context, field.Field, matrix.Mat, matrix.Mat, []uint64) 
 	return c, f, a, b, k
 }
 
-// Rotation offsets the kernel construction needs for this layout/choice.
 func kernelRots(n, dim int, ch KernelChoice) []int {
 	set := map[int]bool{
 		ch.ColA - ch.Target: true, ch.ColB - ch.Target: true,
@@ -56,7 +54,7 @@ func kernelRots(n, dim int, ch KernelChoice) []int {
 	return out
 }
 
-func TestKernelForgesStrengthenedMatmul(t *testing.T) {
+func TestKernelForgesCorrectedMatmul(t *testing.T) {
 	c, f, a, b, kvec := fixture()
 	e := dataseal.MatmulEncode(f, a, b, dataseal.MatmulKey{K: kvec, Alpha: 7})
 	ch := KernelChoice{0, 1, 0}
@@ -68,7 +66,7 @@ func TestKernelForgesStrengthenedMatmul(t *testing.T) {
 	c0 := keys.Decrypt(honest)
 	c1 := keys.Decrypt(changed)
 	correct := matrix.Mul(f, a, b)
-	for _, mode := range []dataseal.MatmulVerifier{dataseal.Original, dataseal.Strengthened, dataseal.Appendix} {
+	for _, mode := range []dataseal.MatmulVerifier{dataseal.Original, dataseal.Corrected, dataseal.Appendix} {
 		at := judge(dataseal.MatmulVerify(f, e.Client, c1, mode).Accepted(), c1, c0, c1.TopRows(N), correct)
 		if !at.Forged() {
 			t.Fatalf("verifier %v not forged: accepted=%v wrong=%v", mode, at.Accepted, at.Wrong)
@@ -87,7 +85,7 @@ func TestSelectiveScalingOriginalOnly(t *testing.T) {
 	c1 := keys.Decrypt(changed)
 	correct := matrix.Mul(f, a, b)
 	orig := judge(dataseal.MatmulVerify(f, e.Client, c1, dataseal.Original).Accepted(), c1, c0, c1.TopRows(N), correct)
-	strong := judge(dataseal.MatmulVerify(f, e.Client, c1, dataseal.Strengthened).Accepted(), c1, c0, c1.TopRows(N), correct)
+	strong := judge(dataseal.MatmulVerify(f, e.Client, c1, dataseal.Corrected).Accepted(), c1, c0, c1.TopRows(N), correct)
 	if !orig.Forged() {
 		t.Fatal("selective scaling should forge original")
 	}

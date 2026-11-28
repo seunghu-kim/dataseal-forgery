@@ -1,0 +1,133 @@
+{
+  "valid": false,
+  "rows": 21,
+  "issues": [
+    {
+      "severity": "error",
+      "row": 1,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 2,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 3,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 4,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 5,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 6,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 7,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 8,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 9,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 10,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 11,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 12,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 13,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 14,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 15,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 16,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 17,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 18,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 19,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 20,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    },
+    {
+      "severity": "error",
+      "row": 21,
+      "field": "sketch_assumptions",
+      "message": "this reporting protocol requires p=65537, r=10, 1\u003c=Q_auth\u003c=2^32"
+    }
+  ],
+  "separate_analysis_partitions": 1
+}

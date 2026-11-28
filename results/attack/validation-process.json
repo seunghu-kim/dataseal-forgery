@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\measurement-infrastructure\\20261111-004720\\offline.exe",
+    "validate",
+    "--input",
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708\\trials.jsonl",
+    "--metadata",
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708\\environment.json",
+    "--out",
+    "C:\\Users\\user\\Desktop\\DataSeal\\dataseal-forgery\\results\\A\\A-fresh-A-newprofiles-20261114-210708\\validation.json"
+  ],
+  "error": "not_measured",
+  "stdout_stderr": ""
+}

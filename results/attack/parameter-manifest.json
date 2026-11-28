@@ -1,0 +1,22 @@
+{
+  "LogQP": 438,
+  "N": 16384,
+  "P_primes": [
+    36028797020209153,
+    36028797017456641
+  ],
+  "Q_primes": [
+    72057594038321153,
+    36028797019389953,
+    36028797019488257,
+    18014398508400641,
+    18014398510661633,
+    18014398508138497
+  ],
+  "he_security_target_bits": 128,
+  "he_security_verified_bits": "not_measured",
+  "profile": "PN14QP438",
+  "sigma": 3.2,
+  "source": "actual pinned bfvpack.NewContext parameters",
+  "t": 65537
+}

@@ -1,0 +1,356 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Structural aid; offline validator also enforces success consistency, errors, capability/profile partitioning, provenance and mathematical eligibility. No observation reconstruction.",
+  "properties": {
+    "accepted": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "actual_output": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "addition_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "attack_success": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "available_rotation_keys": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "ciphertext_multiplication_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "data_origin": {
+      "enum": [
+        "synthetic_example",
+        "fresh_measurement"
+      ]
+    },
+    "decryption_time_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "encryption_time_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "error_magnitude": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "error_message": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "evaluation_key_profile": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "evaluation_time_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "execution_status": {
+      "enum": [
+        "completed",
+        "runtime_error",
+        "panic",
+        "unsupported_configuration",
+        "timeout",
+        "cancelled",
+        "not_started"
+      ]
+    },
+    "expected_output": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "experiment_category": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "experiment_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "type": "string"
+    },
+    "implementation": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "input_dimensions": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "is_warmup": {
+      "type": "boolean"
+    },
+    "key_switch_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "machine_id": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "mathematical_precondition": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "metadata_id": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "operation_count_source": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "output_difference": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "parameter_profile": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "plaintext_multiplication_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "precondition_satisfied": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "preparation_time_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "relinearization_key_available": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "required_rotation_keys": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "rotation_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "run_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "dataseal.trial.v1"
+    },
+    "seed": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "time_unit": {
+      "const": "ns"
+    },
+    "timing_boundary": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "total_time_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "trial_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "type": "string"
+    },
+    "verification_time_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    },
+    "verifier": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "workload": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "workload_definition": {
+      "description": "Use not_measured for unavailable observations; see SCHEMA.md and offline cross-field validator."
+    },
+    "wrong_output": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "not_measured"
+        }
+      ]
+    }
+  },
+  "required": [
+    "experiment_id",
+    "run_id",
+    "trial_id",
+    "experiment_category",
+    "workload",
+    "implementation",
+    "verifier",
+    "input_dimensions",
+    "seed",
+    "parameter_profile",
+    "evaluation_key_profile",
+    "expected_output",
+    "actual_output",
+    "output_difference",
+    "error_magnitude",
+    "wrong_output",
+    "accepted",
+    "attack_success",
+    "mathematical_precondition",
+    "precondition_satisfied",
+    "available_rotation_keys",
+    "required_rotation_keys",
+    "relinearization_key_available",
+    "rotation_count",
+    "ciphertext_multiplication_count",
+    "plaintext_multiplication_count",
+    "addition_count",
+    "key_switch_count",
+    "operation_count_source",
+    "preparation_time_ns",
+    "encryption_time_ns",
+    "evaluation_time_ns",
+    "verification_time_ns",
+    "decryption_time_ns",
+    "total_time_ns",
+    "schema_version",
+    "data_origin",
+    "machine_id",
+    "metadata_id",
+    "time_unit",
+    "workload_definition",
+    "is_warmup",
+    "timing_boundary",
+    "execution_status",
+    "error_message"
+  ],
+  "title": "DataSeal generic externally supplied per-trial observations",
+  "type": "object"
+}

@@ -1,5 +1,4 @@
 {
-  "go_version": "go1.23.4 darwin/arm64",
   "veritas": {
     "repository": "https://github.com/ldsec/veritas",
     "commit": "6e58ab505f81c03c1b71ffaf0dc29205293ba15a",
@@ -11,20 +10,11 @@
     "go_sum_hash": "h1:FrWoiqOIU45yDIJN5uIsiTy0eTF19O2BD3ENefoaO9M=",
     "note": "The replace directive lives in the VERITAS module. A separate main module must re-declare the same replace at main-module level; the experiments/lattigo go.mod does so."
   },
-  "bfv_profile_candidate": {
+  "bfv_profile": {
     "lattigo_param_set": "PN14QP438",
     "ring_degree_N": 16384,
     "logQ": 438,
     "plaintext_modulus_t": 65537,
-    "note": "VERITAS vche_1/vche_2 benchmarks use PN14QP438. t=65537 must satisfy BFV batching (2N | t-1): 2*16384=32768 divides 65536. Verified candidate common profile; final profile confirmed in G2/G5."
-  },
-  "build_status": {
-    "own_go_module": "builds and runs (go test on self-written module passes)",
-    "lattigo_bfv": "downloads pinned version and builds/runs (BFV smoke works)",
-    "veritas_rep_vche_1": "builds and runs; benchmarks run (Add 0.12ms, Mul deg1 11.3ms, Relin 5.9ms at N=16384). Upstream TestVCHE1 fails the Type2Fails negative subtests (Add/Sub/Rotate...) ONLY at the LogN=16 / NumReplications=1 (PN16) parameter set. VERIFIED this is NOT a Go-toolchain artifact: it reproduces identically under Go 1.16 (earliest arm64 toolchain, contemporaneous with the module's go 1.15 directive). Cause is structural: at NumReplications=1 there is no replication redundancy, so verifyUint cannot detect a consistently-manipulated ciphertext. Smaller sets (NumReplications=64) pass these negative tests.",
-    "veritas_pe_vche_2": "builds and runs; matched add/square integrated and verified in G3",
-    "g8_veritas_authenticated_matmul": "REP (vche_1) and PE (vche_2) public-right matmul C=A*B (A confidential, B public) implemented from official authenticated RotateColumns + Mul(ct, tagged PlaintextMul) + Add, verified via official DecodeUint. veritas/matmul_test.go confirms exact F_p result, official-verifier acceptance, and rejection on ciphertext/tag mismatch for sizes up to NSlots/2 (REP PN13 numReplications=4 -> dim<=32; PE PN13 -> dim<=64). Upgrades the prior METHOD_MISMATCH to PASS for supported sizes. REP/PE run at PN13 native params: PARAMETER_MISMATCH vs the PN14 BFV group (no absolute-time comparison). Composition (A*B1+D)*B2 remains METHOD_MISMATCH (not implemented).",
-    "g7_128_strategy": "Single comparison group PN14: n<=64 single ciphertext, n=128 tiled (T=64) reusing the verified PublicRightMatmul kernel + ct-ct adds. bfvpack.PlanMatmul is a deterministic planner (plan_test.go); tiled_test.go round-trips 8^3, 130x128, 128x128, rectangular, sub-tile. PN15QP880 (N=32768, t=65537, 2N|t-1) validated as single-ciphertext alternative for bfv_only/sketch 128 (TestSingleCtPN15_128); DataSeal 128 (130^2=16900 > PN15 half 16384) has no single-ciphertext layout in the registry. PN16 intentionally excluded.",
-    "g9_finding_checksum_tiling_overhead": "Corrects the earlier 'checksum overhead ~ 0' claim: it holds only while the checksum fits the same single ciphertext. Under 128 tiling the two DataSeal checksum rows add a third block row, raising tile multiplies 8->12 and measured server time ~9.7s -> ~14.5s (~1.5x). Raw: results/lattigo/final/matmul_sweep.json."
+    "note": "t=65537 satisfies the BFV batching condition (2N | t-1): 2*16384=32768 divides 65536."
   }
 }

@@ -1,0 +1,20 @@
+﻿B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wtrue-0: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-0: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-1: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-2: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-3: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-4: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-5: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-6: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-7: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-8: completed passed=true
+B-fair-v3-sketch-r1-20261114T055536Z-main-private_sketch_r1-controlled-n128-private_sketch-controlled-n128-wfalse-9: completed passed=true
+faireval.exe : offline validation failed: exit status 2: result validation failed
+At C:\Users\user\Desktop\DataSeal\dataseal-forgery\results\B-fair-v3-sketch-r1-20261114T055536Z\run-sketch-r1-main.p
+s1:90 char:5
++     & $exe @args 2>&1 | Tee-Object -FilePath $log | Out-Null
++     ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (offline validat...lidation failed:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+

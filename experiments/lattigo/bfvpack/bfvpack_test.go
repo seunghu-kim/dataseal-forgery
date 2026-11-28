@@ -110,7 +110,7 @@ func TestDataSealMatmulOverBFV(t *testing.T) {
 	if !out.Equal(dataseal.MatmulEval(f, e)) {
 		t.Fatal("dataseal matmul over BFV mismatch")
 	}
-	for _, mode := range []dataseal.MatmulVerifier{dataseal.Original, dataseal.Strengthened, dataseal.Appendix} {
+	for _, mode := range []dataseal.MatmulVerifier{dataseal.Original, dataseal.Corrected, dataseal.Appendix} {
 		if !dataseal.MatmulVerify(f, e.Client, out, mode).Accepted() {
 			t.Fatalf("verifier %v rejected", mode)
 		}

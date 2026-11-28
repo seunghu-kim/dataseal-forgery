@@ -2,10 +2,8 @@ package bfvpack
 
 import "fmt"
 
-// Param is a BFV parameter candidate used by the capacity planner. RowSlots is
-// N/2 because BFV RotateColumns is cyclic within each of the two N/2 slot
-// halves; the row-major layouts here keep all data in the first half so a
-// rotation never crosses the half boundary.
+// Param is a BFV parameter set for the capacity planner. RowSlots is N/2: column
+// rotation is cyclic within each half, and layouts stay in the first half.
 type Param struct {
 	Name     string
 	LogN     int
@@ -13,7 +11,6 @@ type Param struct {
 	RowSlots int
 }
 
-// ParamByName returns the registry entry for a parameter set name.
 func ParamByName(name string) (Param, bool) {
 	for _, p := range Params {
 		if p.Name == name {
@@ -23,25 +20,22 @@ func ParamByName(name string) (Param, bool) {
 	return Param{}, false
 }
 
-// Params is the fixed registry of pinned-backend parameter sets (t=65537 for
-// all, so F_p is identical across them). PN16 is intentionally absent: it is not
-// a pinned default and must not be silently introduced.
+// Params is the registry of pinned parameter sets (all t=65537). PN16 is
+// intentionally absent.
 var Params = []Param{
 	{"PN13QP218", 13, 8192, 4096},
 	{"PN14QP438", 14, 16384, 8192},
 	{"PN15QP880", 15, 32768, 16384},
 }
 
-// Strategy names.
 const (
 	StrategySingleCt = "single_ct"
 	StrategyTiled    = "tiled"
 	StrategyBlocked  = "blocked"
 )
 
-// MatmulPlan is the deterministic capacity/packing decision for one
-// public-right matmul configuration. It is pure data derived from dimensions
-// and the parameter registry, so it is unit-testable without any HE object.
+// MatmulPlan is the packing decision for one matmul configuration, derived from
+// dimensions only.
 type MatmulPlan struct {
 	Scheme       string `json:"scheme"`
 	N            int    `json:"n"`
@@ -90,11 +84,8 @@ func maxInt(xs ...int) int {
 	return m
 }
 
-// PlanMatmul computes the packing strategy for a public-right matmul of an
-// (n+checksumRows) x d confidential operand by a public d x ell operand, with a
-// chosen base comparison parameter set and tiling block size. The decision is:
-// prefer a single ciphertext at baseParam; otherwise tile at baseParam;
-// otherwise blocked.
+// PlanMatmul prefers a single ciphertext at baseParam, then tiling at baseParam,
+// else reports blocked.
 func PlanMatmul(scheme string, n, d, ell, checksumRows, tileSize int, baseParam string) MatmulPlan {
 	bp, ok := ParamByName(baseParam)
 	if !ok {
@@ -105,7 +96,6 @@ func PlanMatmul(scheme string, n, d, ell, checksumRows, tileSize int, baseParam 
 		LogicalRows: n + checksumRows, BaseParam: baseParam, TileSize: tileSize,
 	}
 
-	// Single-ciphertext square-packed layout.
 	p.SingleCtDim = maxInt(p.LogicalRows, d, ell)
 	p.SingleCtSlots = p.SingleCtDim * p.SingleCtDim
 	for _, cand := range Params {
@@ -116,7 +106,6 @@ func PlanMatmul(scheme string, n, d, ell, checksumRows, tileSize int, baseParam 
 	}
 	p.SingleCtBaseOK = p.SingleCtSlots <= bp.RowSlots
 
-	// Tiled layout at baseParam.
 	p.TileDim = tileSize
 	p.IBlocks = ceilDiv(p.LogicalRows, tileSize)
 	p.KBlocks = ceilDiv(d, tileSize)

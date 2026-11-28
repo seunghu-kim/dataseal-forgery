@@ -6,19 +6,10 @@ import (
 	"dsfgo/matrix"
 )
 
-// Tiled public-right matmul. A confidential operand is split into a grid of
-// blocks, each packed row-major in one ciphertext with a common square stride
-// Dim. The product by a public matrix is computed block-wise:
-// C[I][J] = sum_K PublicRightMatmul(A[I][K], B[K][J]) accumulated with ct-ct
-// adds. This reuses the verified single-ciphertext kernel and keeps one
-// parameter group for every matrix size.
-//
-// Row and column block boundaries are explicit offset arrays, so the same
-// implementation serves two layout policies:
-//   - uniform (G7): equal RowTile=ColTile=Dim blocks.
-//   - capacity_aware (F3): the trailing block row absorbs the DataSeal checksum
-//     rows into otherwise-unused slots, using a larger Dim, instead of spending
-//     a whole extra block row on them.
+// Tiled matmul: the operand is split into blocks, one row-major ciphertext each,
+// and C[I][J] = sum_K A[I][K]*B[K][J] reuses the single-ciphertext kernel.
+// Layout policies: uniform blocks, or capacity_aware, where the last block row
+// absorbs the DataSeal checksum rows instead of adding a block row.
 
 type TiledCipher struct {
 	Rows, Cols int // logical matrix dimensions
@@ -31,8 +22,120 @@ type TiledCipher struct {
 	colOff     []int // len KBlocks+1 cumulative column boundaries
 }
 
-// uniformOffsets returns cumulative boundaries splitting total into tile-sized
-// blocks (last may be short).
+// TiledLayout is public geometry, independent of ciphertexts and private input.
+type TiledLayout struct {
+	Rows, Cols, Dim, ColTile int
+	RowOffsets, ColOffsets   []int
+}
+
+func NewTiledLayout(rows, cols, dataRows, tile, stride int, capacity bool) TiledLayout {
+	if rows < 1 || cols < 1 || dataRows < 1 || dataRows > rows || tile < 1 {
+		panic("invalid tiled geometry")
+	}
+	ro := uniformOffsets(rows, tile)
+	if capacity {
+		ro = capacityRowOffsets(dataRows, rows, tile)
+	}
+	return TiledLayout{rows, cols, stride, tile, ro, uniformOffsets(cols, tile)}
+}
+
+func (c Context) validateTiledLayout(l TiledLayout) {
+	if l.Rows < 1 || l.Cols < 1 || l.ColTile < 1 || l.Dim < 1 || l.Dim > c.RowSlots()/l.Dim {
+		panic("invalid tiled capacity")
+	}
+	for _, pair := range []struct {
+		off   []int
+		total int
+	}{{l.RowOffsets, l.Rows}, {l.ColOffsets, l.Cols}} {
+		if len(pair.off) < 2 || pair.off[0] != 0 || pair.off[len(pair.off)-1] != pair.total {
+			panic("invalid tile offsets")
+		}
+		for i := 1; i < len(pair.off); i++ {
+			if pair.off[i] <= pair.off[i-1] || pair.off[i]-pair.off[i-1] > l.Dim {
+				panic("tile exceeds stride")
+			}
+		}
+	}
+	if l.ColTile > l.Dim {
+		panic("output tile exceeds stride")
+	}
+}
+
+func (k Keys) EncryptTiledLayout(m matrix.Mat, l TiledLayout) TiledCipher {
+	k.ctx.validateTiledLayout(l)
+	if m.Rows() != l.Rows || m.Cols() != l.Cols {
+		panic("tiled input shape mismatch")
+	}
+	return k.encryptGrid(m, append([]int(nil), l.RowOffsets...), append([]int(nil), l.ColOffsets...), l.Dim, l.ColTile)
+}
+
+// PreparedTiledMatmul holds encoded public masks only; it is prepared from
+// Context, without keys or A.
+type PreparedTiledMatmul struct {
+	input         TiledLayout
+	outputOffsets []int
+	programs      [][][]PreparedMatmul
+}
+
+func (c Context) PrepareTiledMatmul(l TiledLayout, b matrix.Mat, outCols int) PreparedTiledMatmul {
+	c.validateTiledLayout(l)
+	if b.Rows() != l.Cols || outCols < 1 || outCols > b.Cols() {
+		panic("tiled public operand shape mismatch")
+	}
+	l.RowOffsets = append([]int(nil), l.RowOffsets...)
+	l.ColOffsets = append([]int(nil), l.ColOffsets...)
+	p := PreparedTiledMatmul{input: l, outputOffsets: uniformOffsets(outCols, l.ColTile)}
+	p.programs = make([][][]PreparedMatmul, len(l.RowOffsets)-1)
+	public := Keys{ctx: c}
+	for i, rows := range offLens(l.RowOffsets) {
+		p.programs[i] = make([][]PreparedMatmul, len(p.outputOffsets)-1)
+		for j, cols := range offLens(p.outputOffsets) {
+			p.programs[i][j] = make([]PreparedMatmul, len(l.ColOffsets)-1)
+			for kk, inner := range offLens(l.ColOffsets) {
+				block := blockOf(b, l.ColOffsets[kk], p.outputOffsets[j], inner, cols)
+				p.programs[i][j][kk] = public.PrepareMatmul(MakeLayout(rows, inner, rows, l.Dim), block, cols)
+			}
+		}
+	}
+	return p
+}
+
+// ServerTiledMatmul does prepared evaluation and tile accumulation only; no mask
+// encoding happens here.
+func (k Keys) ServerTiledMatmul(a TiledCipher, p PreparedTiledMatmul) TiledCipher {
+	l := p.input
+	equal := func(x, y []int) bool {
+		if len(x) != len(y) {
+			return false
+		}
+		for i := range x {
+			if x[i] != y[i] {
+				return false
+			}
+		}
+		return true
+	}
+	if a.Rows != l.Rows || a.Cols != l.Cols || a.Dim != l.Dim || a.ColTile != l.ColTile || !equal(a.rowOff, l.RowOffsets) || !equal(a.colOff, l.ColOffsets) {
+		panic("prepared tiled layout mismatch")
+	}
+	out := TiledCipher{Rows: a.Rows, Cols: p.outputOffsets[len(p.outputOffsets)-1], Dim: a.Dim, ColTile: a.ColTile, IBlocks: a.IBlocks, KBlocks: len(p.outputOffsets) - 1, rowOff: append([]int(nil), a.rowOff...), colOff: append([]int(nil), p.outputOffsets...), tiles: make([][]Cipher, a.IBlocks)}
+	for i := range p.programs {
+		out.tiles[i] = make([]Cipher, out.KBlocks)
+		for j := range p.programs[i] {
+			for kk, program := range p.programs[i][j] {
+				term := k.ServerMatmul(a.tiles[i][kk], program)
+				if kk == 0 {
+					out.tiles[i][j] = term
+				} else {
+					out.tiles[i][j] = k.Add(out.tiles[i][j], term)
+				}
+			}
+		}
+	}
+	return out
+}
+
+// uniformOffsets splits total into tile-sized blocks (the last may be short).
 func uniformOffsets(total, tile int) []int {
 	off := []int{0}
 	for x := tile; x < total; x += tile {
@@ -45,9 +148,8 @@ func uniformOffsets(total, tile int) []int {
 	return off
 }
 
-// capacityRowOffsets splits totalRows (= dataRows + trailing rows such as
-// checksum rows) into exactly ceil(dataRows/tile) blocks, folding the trailing
-// rows into the final block instead of starting a new one.
+// capacityRowOffsets folds trailing (checksum) rows into the last block instead
+// of starting a new one.
 func capacityRowOffsets(dataRows, totalRows, tile int) []int {
 	nBlocks := ceilDiv(dataRows, tile)
 	if nBlocks < 1 {
@@ -67,16 +169,6 @@ func offLens(off []int) []int {
 		out[i] = off[i+1] - off[i]
 	}
 	return out
-}
-
-func maxOff(off []int) int {
-	m := 0
-	for _, l := range offLens(off) {
-		if l > m {
-			m = l
-		}
-	}
-	return m
 }
 
 func (k Keys) encryptGrid(m matrix.Mat, rowOff, colOff []int, dim, colTile int) TiledCipher {
@@ -100,39 +192,7 @@ func (k Keys) encryptGrid(m matrix.Mat, rowOff, colOff []int, dim, colTile int) 
 	return tc
 }
 
-// EncryptTiled packs a logical matrix into a uniform grid of tileSize blocks.
-func (k Keys) EncryptTiled(m matrix.Mat, tileSize int) TiledCipher {
-	return k.encryptGrid(m, uniformOffsets(m.Rows(), tileSize), uniformOffsets(m.Cols(), tileSize), tileSize, tileSize)
-}
-
-// EncryptTiledCapacity packs a logical matrix whose last (m.Rows()-dataRows)
-// rows are appended checksum rows, folding them into the final block row. The
-// tile stride grows to Dim=max(largest row block, colTile) so the merged block
-// still fits one ciphertext; if it would exceed RowSlots the caller should fall
-// back to EncryptTiled.
-func (k Keys) EncryptTiledCapacity(m matrix.Mat, dataRows, colTile int) TiledCipher {
-	rowOff := capacityRowOffsets(dataRows, m.Rows(), colTile)
-	colOff := uniformOffsets(m.Cols(), colTile)
-	dim := colTile
-	if r := maxOff(rowOff); r > dim {
-		dim = r
-	}
-	return k.encryptGrid(m, rowOff, colOff, dim, colTile)
-}
-
-// CapacityTilingFits reports whether the capacity-aware layout fits one
-// ciphertext half at the context's RowSlots.
-func (c Context) CapacityTilingFits(totalRows, dataRows, colTile int) bool {
-	rowOff := capacityRowOffsets(dataRows, totalRows, colTile)
-	dim := colTile
-	if r := maxOff(rowOff); r > dim {
-		dim = r
-	}
-	return dim*dim <= c.RowSlots()
-}
-
-// TiledMatmulRotations returns the union of rotation offsets needed across all
-// (inner-block, output-block) size pairs for a uniform tiled matmul.
+// TiledMatmulRotations is the union of rotation offsets over all block size pairs.
 func TiledMatmulRotations(inner, outCols, tileSize int) []int {
 	return tiledRotations(uniformOffsets(inner, tileSize), uniformOffsets(outCols, tileSize))
 }
@@ -154,52 +214,6 @@ func tiledRotations(kOff, jOff []int) []int {
 	return out
 }
 
-// MatmulRotations returns the rotation offsets a tiled product of this operand
-// by a public (Cols x outCols) matrix needs, matching the operand's own column
-// blocking (so it is correct for both uniform and capacity layouts).
-func (a TiledCipher) MatmulRotations(outCols int) []int {
-	return tiledRotations(a.colOff, uniformOffsets(outCols, a.ColTile))
-}
-
-// PublicRightMatmulTiled computes Enc(A)->Enc(A*B) with B public, tiling the
-// inner and output dimensions. The result is an output grid.
-func (k Keys) PublicRightMatmulTiled(a TiledCipher, b matrix.Mat, outCols int) TiledCipher {
-	if b.Rows() != a.Cols {
-		panic("tiled matmul inner dimension mismatch")
-	}
-	if outCols > b.Cols() {
-		panic("tiled matmul output columns exceed operand")
-	}
-	jOff := uniformOffsets(outCols, a.ColTile)
-	jLens := offLens(jOff)
-	kLens := offLens(a.colOff)
-	out := TiledCipher{
-		Rows: a.Rows, Cols: outCols, Dim: a.Dim, ColTile: a.ColTile,
-		IBlocks: a.IBlocks, KBlocks: len(jLens),
-		rowOff: a.rowOff, colOff: jOff,
-		tiles: make([][]Cipher, a.IBlocks),
-	}
-	for i := 0; i < a.IBlocks; i++ {
-		out.tiles[i] = make([]Cipher, len(jLens))
-		for j := 0; j < len(jLens); j++ {
-			var acc *Cipher
-			for kk := 0; kk < a.KBlocks; kk++ {
-				bBlk := blockOf(b, a.colOff[kk], jOff[j], kLens[kk], jLens[j])
-				term := k.PublicRightMatmul(a.tiles[i][kk], bBlk, jLens[j])
-				if acc == nil {
-					t := term
-					acc = &t
-				} else {
-					sum := k.Add(*acc, term)
-					acc = &sum
-				}
-			}
-			out.tiles[i][j] = *acc
-		}
-	}
-	return out
-}
-
 func blockOf(m matrix.Mat, r0, c0, rows, cols int) matrix.Mat {
 	blk := matrix.New(rows, cols)
 	for r := 0; r < rows; r++ {
@@ -210,7 +224,6 @@ func blockOf(m matrix.Mat, r0, c0, rows, cols int) matrix.Mat {
 	return blk
 }
 
-// Bytes returns the total serialized size of all ciphertext tiles.
 func (c TiledCipher) Bytes() int {
 	total := 0
 	for i := range c.tiles {
@@ -221,10 +234,8 @@ func (c TiledCipher) Bytes() int {
 	return total
 }
 
-// NumTiles returns the number of ciphertext tiles in the grid.
 func (c TiledCipher) NumTiles() int { return c.IBlocks * c.KBlocks }
 
-// DecryptTiled reassembles the logical matrix from an output grid.
 func (k Keys) DecryptTiled(c TiledCipher) matrix.Mat {
 	out := matrix.New(c.Rows, c.Cols)
 	rowLens, colLens := offLens(c.rowOff), offLens(c.colOff)

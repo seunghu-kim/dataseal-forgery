@@ -1,5 +1,5 @@
-// Package dataseal ports the DataSeal encoders and verifiers from
-// src/dataseal.cpp. Row order is normalized to [data; weighted; golden].
+// Package dataseal implements DataSeal encoding and verification.
+// Matrix multiplication uses the row order [data; weighted; golden].
 package dataseal
 
 import (
@@ -7,11 +7,13 @@ import (
 	"dsfgo/matrix"
 )
 
+// MatmulVerifier selects the original checks, the corrected check, or the variant
+// of DataSeal's Appendix A.
 type MatmulVerifier int
 
 const (
 	Original MatmulVerifier = iota
-	Strengthened
+	Corrected
 	Appendix
 )
 
@@ -19,7 +21,7 @@ func (v MatmulVerifier) String() string {
 	switch v {
 	case Original:
 		return "dataseal_original"
-	case Strengthened:
+	case Corrected:
 		return "dataseal_strengthened"
 	case Appendix:
 		return "dataseal_appendix"
@@ -44,17 +46,15 @@ func (r VerifyResult) Accepted() bool {
 	return true
 }
 
-// --- Matrix multiplication ---
-
 type MatmulKey struct {
 	K     []uint64
 	Alpha uint64
 }
 
 type MatmulClient struct {
-	Key           MatmulKey
-	N, D, Ell     int
-	W, G, U0, Z   []uint64
+	Key         MatmulKey
+	N, D, Ell   int
+	W, G, U0, Z []uint64
 }
 
 type MatmulEncoding struct {
@@ -63,24 +63,22 @@ type MatmulEncoding struct {
 	B      matrix.Mat
 }
 
-// MatmulInputChecksum computes the input-dependent checksum rows W=A^T k and
-// G=alpha*W. These depend only on the private input A (and the key), not on the
-// public program B, so the benchmark times them as input preparation.
+// MatmulInputChecksum returns w = A^T k and g = alpha*w; they do not depend on
+// the public matrix B.
 func MatmulInputChecksum(f field.Field, a matrix.Mat, key MatmulKey) (w, g []uint64) {
 	w = matrix.MatTVec(f, a, key.K)
 	g = scale(f, key.Alpha, w)
 	return w, g
 }
 
-// MatmulExpected computes the program-dependent expected values U0=B^T W and
-// Z=B^T G. These depend on the public program B, so the benchmark times them as
-// program preparation.
+// MatmulExpected returns u0 = B^T w and z = B^T g.
 func MatmulExpected(f field.Field, b matrix.Mat, w, g []uint64) (u0, z []uint64) {
 	u0 = matrix.MatTVec(f, b, w)
 	z = matrix.MatTVec(f, b, g)
 	return u0, z
 }
 
+// MatmulEncode builds A* = [A; w; g] and the client's expected values u0 and z.
 func MatmulEncode(f field.Field, a, b matrix.Mat, key MatmulKey) MatmulEncoding {
 	if len(key.K) != a.Rows() {
 		panic("matmul key length must equal row count")
@@ -100,6 +98,8 @@ func MatmulEncode(f field.Field, a, b matrix.Mat, key MatmulKey) MatmulEncoding 
 
 func MatmulEval(f field.Field, e MatmulEncoding) matrix.Mat { return matrix.Mul(f, e.AStar, e.B) }
 
+// MatmulVerify checks C^T k = u on [C; u; v]. Original checks: also v = z.
+// Corrected check: also u = u0 and v = z. Appendix A variant: v = alpha*u.
 func MatmulVerify(f field.Field, cs MatmulClient, cStar matrix.Mat, mode MatmulVerifier) VerifyResult {
 	r := VerifyResult{Checks: map[string]bool{}}
 	r.ShapeOK = cStar.Rows() == cs.N+2 && cStar.Cols() == cs.Ell
@@ -113,7 +113,7 @@ func MatmulVerify(f field.Field, cs MatmulClient, cStar matrix.Mat, mode MatmulV
 	switch mode {
 	case Original:
 		r.Checks["golden_output"] = eq(v, cs.Z)
-	case Strengthened:
+	case Corrected:
 		r.Checks["expected_checksum"] = eq(u, cs.U0)
 		r.Checks["golden_output"] = eq(v, cs.Z)
 	case Appendix:
@@ -121,8 +121,6 @@ func MatmulVerify(f field.Field, cs MatmulClient, cStar matrix.Mat, mode MatmulV
 	}
 	return r
 }
-
-// --- Addition ---
 
 type AddClient struct {
 	K    []uint64
@@ -135,6 +133,7 @@ type AddEncoding struct {
 	AStar, BStar matrix.Mat
 }
 
+// AddEncode appends A^T k to A and B^T k to B; the expected value z is their sum.
 func AddEncode(f field.Field, a, b matrix.Mat, k []uint64) AddEncoding {
 	if a.Rows() != b.Rows() || a.Cols() != b.Cols() {
 		panic("addition shape mismatch")
@@ -168,8 +167,6 @@ func AddVerify(f field.Field, cs AddClient, cStar matrix.Mat) VerifyResult {
 	return r
 }
 
-// --- Squaring (corrected Algorithm 6) ---
-
 type SquareClient struct {
 	Eta  []uint64
 	N, D int
@@ -181,6 +178,8 @@ type SquareEncoding struct {
 	AStar  matrix.Mat
 }
 
+// SquareEncode appends t_j = eta_j * prod_i a_ij (corrected Algorithm 6) and
+// records z_j = t_j^2.
 func SquareEncode(f field.Field, a matrix.Mat, eta []uint64) SquareEncoding {
 	if len(eta) != a.Cols() {
 		panic("square key length mismatch")
@@ -201,6 +200,7 @@ func SquareEncode(f field.Field, a matrix.Mat, eta []uint64) SquareEncoding {
 
 func SquareEval(f field.Field, e SquareEncoding) matrix.Mat { return matrix.Square(f, e.AStar) }
 
+// SquareVerify checks t = z and t_j = eta_j^2 * prod_i c_ij on [C; t].
 func SquareVerify(f field.Field, cs SquareClient, cStar matrix.Mat) VerifyResult {
 	r := VerifyResult{Checks: map[string]bool{}}
 	r.ShapeOK = cStar.Rows() == cs.N+1 && cStar.Cols() == cs.D
@@ -222,7 +222,6 @@ func SquareVerify(f field.Field, cs SquareClient, cStar matrix.Mat) VerifyResult
 	return r
 }
 
-// helpers
 func scale(f field.Field, c uint64, a []uint64) []uint64 {
 	r := make([]uint64, len(a))
 	for i := range a {
